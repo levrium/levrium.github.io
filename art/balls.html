@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Balls</title>
+        <style type="text/css">
+body {
+    background-color: #000000;
+}
+div {
+    width: 12px;
+    height: 12px;
+    border-radius: 6px;
+    position: absolute;
+}
+        </style>
+        <script type="text/javascript">
+function Ball(x, y) {
+    var d = 12;
+    var div = document.createElement("div");
+    document.body.appendChild(div);
+    div.style.left = x + "px";
+    div.style.top = y + "px";
+    div.style.backgroundColor = "rgb(" + (Math.floor(Math.random() * 192) + 64) + ", " + (Math.floor(Math.random() * 192) + 64) + ", " + (Math.floor(Math.random() * 192) + 64) + ")";
+    var a = Math.random() * Math.PI * 2;
+    var speed = Math.floor(Math.random() * 12) + 12;
+    var speedX = Math.cos(a) * speed;
+    var speedY = Math.sin(a) * speed;
+    function next() {
+        var nextX = x + speedX;
+        var nextY = y + speedY;
+        if (nextX < 0) {
+            nextX = - speedX - x;
+            speedX *= -1;
+        }
+        else if (nextX > document.documentElement.clientWidth - d) {
+            nextX = document.documentElement.clientWidth * 2 - d * 2 - x - speedX;
+            speedX *= -1;
+        }
+        if (nextY < 0) {
+            nextY = - speedY - y;
+            speedY *= -1;
+        }
+        else if (nextY > document.documentElement.clientHeight - d) {
+            nextY = document.documentElement.clientHeight * 2 - d * 2 - y - speedY;
+            speedY *= -1;
+        }
+        x = nextX;
+        y = nextY;
+        div.style.left = x + "px";
+        div.style.top = y + "px";
+    }
+    setInterval(next, 50 / 3);
+}
+function generate(x, y) {
+    if (x > 16 || y > 16) {
+        new Ball(x, y);
+    }
+}
+window.onload = function() {
+    var mousedown = false;
+    document.documentElement.onmousedown = function(event) {
+        mousedown = true;
+        generate(event.offsetX, event.offsetY);
+    }
+    document.documentElement.onmouseup = function() {
+        mousedown = false;
+    }
+    document.documentElement.onmousemove = function(event) {
+        if (mousedown) {
+            generate(event.offsetX, event.offsetY);
+        }
+    }
+}
+        </script>
+    </head>
+    <body></body>
+</html>

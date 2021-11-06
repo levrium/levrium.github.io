@@ -1,0 +1,291 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Keyboard</title>
+        <style type="text/css">
+* {
+    cursor: default;
+}
+html, body {
+    width: 100%;
+    height: 100%;
+    background-color: #D8D8D8;
+    overflow: hidden;
+    user-select: none;
+}
+div#float {
+    width: 1360px;
+    height: 400px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+div#container {
+    width: 1334px;
+    height: 360px;
+    padding: 18px 11px;
+    border: 2px solid #808080;
+    border-radius: 16px;
+    background-color: #A8A8A8;
+    position: absolute;
+    top: -50%;
+    left: -50%;
+}
+div#fkey {
+    width: 1073px;
+    height: 58px;
+    margin-bottom: 12px;
+}
+div#main {
+    width: 870px;
+    height: 440px;
+    float: left;
+}
+div#control {
+    width: 174px;
+    height: 290px;
+    margin-left: 29px;
+    float: left;
+}
+div#num {
+    width: 232px;
+    height: 290px;
+    margin-left: 29px;
+    float: left;
+}
+div.row {
+    clear: left;
+}
+div[id ^= "key"] {
+    width: 50px;
+    height: 50px;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 6px;
+    margin: 2px;
+    float: left;
+    font-size: 1.25em;
+    line-height: 48px;
+    text-align: center;
+    vertical-align: middle;
+}
+div[id ^= "key"]:active {
+    color: #FFFFFF;
+    border-color: #808080;
+    background-color: #C0C0C0;
+}
+div.default {
+    color: #E0E0E0;
+    border-color: #404040;
+    background-color: #808080;
+}
+div.down {
+    color: #FFFFFF;
+    border-color: #808080;
+    background-color: #C0C0C0;
+}
+div.double {
+    line-height: 24px;
+}
+        </style>
+        <script type="text/javascript">
+var keyCodes = new Array(8, 9, 13, 16, 17, 18, 19, 20, 27, 32, 33, 34, 35, 36, 37, 38, 39, 40, 45, 46, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 144, 145, 186, 187, 188, 189, 190, 191, 192, 219, 220, 221, 222);
+var keyDown = 0;
+window.onload = function() {
+    window.onkeydown = function() {
+        if(keyCodes.indexOf(window.event.keyCode) != -1) {
+            document.getElementById("key" + window.event.keyCode).className = document.getElementById("key" + window.event.keyCode).className.indexOf("double") == -1?"down":"down double";
+            if(window.event.keyCode == 13 || (window.event.keyCode >= 16 && window.event.keyCode <= 18) || window.event.keyCode == 91) {
+                document.getElementById("keyr" + window.event.keyCode).className = "down";
+            }
+            window.event.returnValue = false;
+        }
+        if(window.event.ctrlKey && window.event.shiftKey && window.event.keyCode == 116) {
+            window.location.reload();
+        }
+        if(window.event.ctrlKey && window.event.shiftKey && window.event.keyCode == 66) {
+            history.back();
+        }
+        if(window.event.ctrlKey && window.event.shiftKey && window.event.altKey && window.event.keyCode == 83) {
+            keyDown = 1;
+        }
+        if(window.event.ctrlKey && window.event.shiftKey && window.event.altKey && window.event.keyCode == 71 && keyDown == 1) {
+            keyDown = 2;
+        }
+        if(window.event.ctrlKey && window.event.shiftKey && window.event.altKey && window.event.keyCode == 13 && keyDown == 2) {
+            window.location.href = "";
+        }
+    }
+    window.onkeyup = function() {
+        if(keyCodes.indexOf(window.event.keyCode) != -1) {
+            document.getElementById("key" + window.event.keyCode).className = document.getElementById("key" + window.event.keyCode).className.indexOf("double") == -1?"default":"default double";
+            if(window.event.keyCode == 13 || (window.event.keyCode >= 16 && window.event.keyCode <= 18) || window.event.keyCode == 91) {
+                document.getElementById("keyr" + window.event.keyCode).className = "default";
+            }
+        }
+        if(window.event.keyCode == 71 || window.event.keyCode == 83) {
+            keyDown = 0;
+        }
+    }
+}
+        </script>
+    </head>
+    <body>
+        <div id="float">
+            <div id="container">
+                <div id="fkey">
+                    <div id="key27" class="default">Esc</div>
+                    <div style="width: 58px;height: 58px;float: left;"></div>
+                    <div id="key112" class="default">F1</div>
+                    <div id="key113" class="default">F2</div>
+                    <div id="key114" class="default">F3</div>
+                    <div id="key115" class="default">F4</div>
+                    <div style="width: 29px;height: 58px;float:left;"></div>
+                    <div id="key116" class="default">F5</div>
+                    <div id="key117" class="default">F6</div>
+                    <div id="key118" class="default">F7</div>
+                    <div id="key119" class="default">F8</div>
+                    <div style="width: 29px;height: 58px;float:left;"></div>
+                    <div id="key120" class="default">F9</div>
+                    <div id="key121" class="default">F10</div>
+                    <div id="key122" class="default">F11</div>
+                    <div id="key123" class="default">F12</div>
+                    <div style="width: 29px;height: 58px;float:left;"></div>
+                    <div id="key44" class="default double" style="font-size: 15px;">Print<br />Screen</div>
+                    <div id="key145" class="default double" style="font-size: 17px;">Scroll<br />Lock</div>
+                    <div id="key19" class="default double" style="font-size: 17px;">Pause<br />Break</div>
+                </div>
+                <div id="main">
+                    <div class="row">
+                        <div id="key192" class="default" style="line-height: 28px;">~<br />`</div>
+                        <div id="key49" class="default double">!<br />1</div>
+                        <div id="key50" class="default double">@<br />2</div>
+                        <div id="key51" class="default double">#<br />3</div>
+                        <div id="key52" class="default double">$<br />4</div>
+                        <div id="key53" class="default double">%<br />5</div>
+                        <div id="key54" class="default double">^<br />6</div>
+                        <div id="key55" class="default double">&amp;<br />7</div>
+                        <div id="key56" class="default double">*<br />8</div>
+                        <div id="key57" class="default double">&#40;<br />9</div>
+                        <div id="key48" class="default double">&#41;<br />0</div>
+                        <div id="key189" class="default double">—<br />-</div>
+                        <div id="key187" class="default double">+<br />=</div>
+                        <div id="key8" class="default" style="width: 108px;">Backspace</div>
+                    </div>
+                    <div class="row">
+                        <div id="key9" class="default" style="width: 79px;">Tab</div>
+                        <div id="key81" class="default">Q</div>
+                        <div id="key87" class="default">W</div>
+                        <div id="key69" class="default">E</div>
+                        <div id="key82" class="default">R</div>
+                        <div id="key84" class="default">T</div>
+                        <div id="key89" class="default">Y</div>
+                        <div id="key85" class="default">U</div>
+                        <div id="key73" class="default">I</div>
+                        <div id="key79" class="default">O</div>
+                        <div id="key80" class="default">P</div>
+                        <div id="key219" class="default double">&#123;<br />&#91;</div>
+                        <div id="key221" class="default double">&#125;<br />&#93;</div>
+                        <div id="key220" class="default double" style="width: 79px;font-size: 17px;">|<br />\</div>
+                    </div>
+                    <div class="row">
+                        <div id="key20" class="default double" style="width: 93.5px;">Caps<br />Lock</div>
+                        <div id="key65" class="default">A</div>
+                        <div id="key83" class="default">S</div>
+                        <div id="key68" class="default">D</div>
+                        <div id="key70" class="default">F</div>
+                        <div id="key71" class="default">G</div>
+                        <div id="key72" class="default">H</div>
+                        <div id="key74" class="default">J</div>
+                        <div id="key75" class="default">K</div>
+                        <div id="key76" class="default">L</div>
+                        <div id="key186" class="default double">:<br />;</div>
+                        <div id="key222" class="default" style="line-height: 28px;">&#34;<br />&#39;</div>
+                        <div id="key13" class="default" style="width: 122.5px;">Enter</div>
+                    </div>
+                    <div class="row">
+                        <div id="key16" class="default" style="width: 122.5px;">Shift</div>
+                        <div id="key90" class="default">Z</div>
+                        <div id="key88" class="default">X</div>
+                        <div id="key67" class="default">C</div>
+                        <div id="key86" class="default">V</div>
+                        <div id="key66" class="default">B</div>
+                        <div id="key78" class="default">N</div>
+                        <div id="key77" class="default">M</div>
+                        <div id="key188" class="default double">&lt;<br />,</div>
+                        <div id="key190" class="default double">&gt;<br />.</div>
+                        <div id="key191" class="default double">?<br />/</div>
+                        <div id="keyr16" class="default" style="width: 151.5px;">Shift</div>
+                    </div>
+                    <div class="row">
+                        <div id="key17" class="default" style="width: 79px;">Ctrl</div>
+                        <div id="key91" class="default" style="width: 64.5px;">Win</div>
+                        <div id="key18" class="default" style="width: 64.5px;">Alt</div>
+                        <div id="key32" class="default" style="width: 340px;">Space</div>
+                        <div id="keyr18" class="default" style="width: 64.5px;">Alt</div>
+                        <div id="keyr91" class="default" style="width: 64.5px;">Win</div>
+                        <div id="key93" class="default" style="width: 50px;">&#128216;</div>
+                        <div id="keyr17" class="default" style="width: 79px;">Ctrl</div>
+                    </div>
+                </div>
+                <div id="control">
+                    <div class="row">
+                        <div id="key45" class="default" style="font-size: 18px;">Insert</div>
+                        <div id="key36" class="default" style="font-size: 17px;">Home</div>
+                        <div id="key33" class="default double" style="font-size: 19px;">Page<br />Up</div>
+                    </div>
+                    <div class="row">
+                        <div id="key46" class="default" style="font-size: 16px;">Delete</div>
+                        <div id="key35" class="default">End</div>
+                        <div id="key34" class="default double" style="font-size: 18px;">Page<br />Down</div>
+                    </div>
+                    <div class="row" style="height: 58px;"></div>
+                    <div class="row">
+                        <div style="width: 58px;height: 58px;float: left;"></div>
+                        <div id="key38" class="default" style="font-size: 28px;">&uarr;</div>
+                    </div>
+                    <div class="row">
+                        <div id="key37" class="default" style="font-size: 28px;">&larr;</div>
+                        <div id="key40" class="default" style="font-size: 28px;">&darr;</div>
+                        <div id="key39" class="default" style="font-size: 28px;">&rarr;</div>
+                    </div>
+                </div>
+                <div id="num">
+                    <div class="row">
+                        <div id="key144" class="default double" style="font-size: 18px;">Num<br />Lock</div>
+                        <div id="key111" class="default">/</div>
+                        <div id="key106" class="default">*</div>
+                        <div id="key109" class="default">-</div>
+                    </div>
+                    <div style="float: left;">
+                        <div class="row">
+                            <div id="key103" class="default">7</div>
+                            <div id="key104" class="default">8</div>
+                            <div id="key105" class="default">9</div>
+                        </div>
+                        <div class="row">
+                            <div id="key100" class="default">4</div>
+                            <div id="key101" class="default">5</div>
+                            <div id="key102" class="default">6</div>
+                        </div>
+                    </div>
+                    <div id="key107" class="default" style="height: 108px;float: left;">+</div>
+                    <div style="float: left;">
+                        <div class="row">
+                            <div id="key97" class="default">1</div>
+                            <div id="key98" class="default">2</div>
+                            <div id="key99" class="default">3</div>
+                        </div>
+                        <div class="row">
+                            <div id="key96" class="default" style="width: 108px;">0</div>
+                            <div id="key110" class="default" style="font-size: 28px;">.</div>
+                        </div>
+                    </div>
+                    <div id="keyr13" class="default" style="height: 108px;font-size: 19px;">Enter</div>
+                </div>
+            </div>
+        </div>
+        <p style="width: 100%;font-size: 12px;text-align: center;margin: 0px;position: absolute;bottom: 0px;">按Ctrl + Shift + F5刷新页面<br />按Ctrl + Shift + B返回上页</p>
+    </body>
+</html>

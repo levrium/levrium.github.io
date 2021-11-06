@@ -1,0 +1,213 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>进制转换</title>
+        <style type="text/css">
+body {
+    font-size: 20px;
+}
+input {
+    padding: 2px 3px;
+    border: 2px solid #B0B0B0;
+    border-radius: 4px;
+    font-size: 18px;
+    background-color: #F8F8F8;
+}
+input[id^=base] {
+    width: 60px;
+    text-align: right;
+}
+input[id^=num] {
+    width: 30%;
+    text-align: right;
+}
+input[id^=text] {
+    width: 45%;
+    font-size: 14px;
+    line-height: 21px;
+}
+input#exchange {
+    width: 40px;
+    background-color: #E8E8E8;
+}
+input#exchange:hover, input#exchange:active {
+    background-color: #F8F8F8;
+}
+        </style>
+        <script type="text/javascript">
+function fill(length) {
+    a = [];
+    for (var i = 0;i < length;i++) {
+        a.push(0);
+    }
+    return a;
+}
+function plus(a, b, base) {
+    if (a.length < b.length) {
+        var c = a;
+        a = b;
+        b = c;
+    }
+    c = 0;
+    for (var i = a.length - 1;i >= 0;i--) {
+        if (i < a.length - b.length) {
+            var d = 0;
+        }
+        else {
+            var d = b[i + b.length - a.length];
+        }
+        a[i] += c;
+        a[i] += d;
+        c = Math.floor(a[i] / base);
+        a[i] %= base;
+    }
+    if (c > 0) {
+        a.unshift(c);
+    }
+    return a;
+}
+function multiple(a, b, base) {
+    var r = [];
+    for (var j = 0;j < b.length;j++) {
+        for (var i = 0;i < a.length;i++) {
+            r.push([a[i] * b[j]].concat(fill(a.length + b.length - i - j - 2)));
+        }
+    }
+    var result = [];
+    for (var i = 0;i < r.length;i++) {
+        result = plus(result, r[i], base);
+    }
+    return result;
+}
+function power(a, b, base) {
+    var result = a;
+    if (b == 0) {
+        return [1];
+    }
+    for (var i = 1;i < b;i++) {
+        result = multiple(result, a, base);
+    }
+    return result;
+}
+function getText(base) {
+    var text = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+/ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿĀāĂăĄąĆćĈĉĊċČčĎďĐđĒēĔĕĖėĘęĚěĜĝĞğĠġĢģĤĥĦħĨĩĪīĬĭĮįİıĲĳĴĵĶķĸĹĺĻļĽľĿŀŁłŃńŅņŇňŉŊŋŌōŎŏŐőŒœŔŕŖŗŘřŚśŜŝŞşŠšŢţŤťŦŧŨũŪūŬŭŮůŰűŲųŴŵŶŷŸŹźŻżŽžſ";
+    switch (base) {
+        case 26 :
+            return "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        case 32 :
+            return "0123456789ABCDEFGHJKMNPQRSTVWXYZ";
+        case 52 :
+            return "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        case 58 :
+            return "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
+        default :
+            return text.substr(0, base);
+    }
+}
+function setText(baseId, textId) {
+    var base = Number(document.getElementById(baseId).value);
+    var text = document.getElementById(textId);
+    if (!isNaN(base) && base >= 2 && base <= 256 && base % 1 == 0) {
+        text.value = getText(base);
+    }
+}
+function exchange() {
+    var base1 = document.getElementById("base1").value;
+    var text1 = document.getElementById("text1").value;
+    var base2 = document.getElementById("base2").value;
+    var num2 = document.getElementById("num2").value;
+    var text2 = document.getElementById("text2").value;
+    document.getElementById("base1").value = base2;
+    document.getElementById("num1").value = num2;
+    document.getElementById("text1").value = text2;
+    document.getElementById("base2").value = base1;
+    document.getElementById("text2").value = text1;
+    main();
+}
+function main() {
+    var base1 = Number(document.getElementById("base1").value);
+    var num1 = document.getElementById("num1").value;
+    var text1 = document.getElementById("text1").value;
+    var base2 = Number(document.getElementById("base2").value);
+    var num2 = document.getElementById("num2");
+    var text2 = document.getElementById("text2").value;
+    var error = document.getElementById("error");
+    error.innerText = "";
+    if (isNaN(base1) || base1 < 2 || base1 > 256 || base1 % 1 != 0) {
+        error.innerText = "非法的初始进制";
+        return;
+    }
+    if (num1 == "") {
+        error.innerText = "初始数字为空";
+        return;
+    }
+    if (text1.length != base1) {
+        error.innerText = "非法的初始序列";
+        return;
+    }
+    if (isNaN(base2) || base2 < 2 || base2 > 256 || base2 % 1 != 0) {
+        error.innerText = "非法的目标进制";
+        return;
+    }
+    if (text2.length != base2) {
+        error.innerText = "非法的目标序列";
+        return;
+    }
+    if (!/[a-z]/.test(text1)) {
+        num1 = num1.toUpperCase();
+    }
+    if (!/[A-Z]/.test(text1)) {
+        num1 = num1.toLowerCase();
+    }
+    var n = [];
+    for (var i = 0;i < num1.length;i++) {
+        var d = text1.indexOf(num1.charAt(i));
+        if (d == -1) {
+            error.innerText = "初始数字中有未定义的位";
+            return;
+        }
+        else {
+            n.push(d);
+        }
+    }
+    var result = [];
+    for (var i = 0;i < n.length;i++) {
+        result = plus(result, multiple([n[i]], power([base1], n.length - i - 1, base2), base2), base2);
+    }
+    while (result.length > 1 && result[0] == 0) {
+        result.shift();
+    }
+    for (var i = 0;i < result.length;i++) {
+        result[i] = text2.charAt(result[i]);
+    }
+    result = result.join("");
+    num2.value = result;
+}
+window.onload = function() {
+    document.getElementById("base1").oninput = function() {
+        setText("base1", "text1");
+        main();
+    }
+    document.getElementById("num1").oninput = main;
+    document.getElementById("text1").oninput = main;
+    document.getElementById("exchange").onclick = exchange;
+    document.getElementById("base2").oninput = function() {
+        setText("base2", "text2");
+        main();
+    }
+    document.getElementById("text2").oninput = main;
+}
+        </script>
+    </head>
+    <body>
+        <p><input id="base1" type="number" min="2" max="256" step="1" value="10" /> 进制 &nbsp; &nbsp;
+        <input id="num1" type="text" value="0" /> &nbsp; &nbsp;
+        序列：<input id="text1" type="text" maxlength="256" value="0123456789" /></p>
+        <p>转为 &nbsp; <input id="exchange" type="button" value="&uarr;&darr;" /></p>
+        <p><input id="base2" type="number" min="2" max="256" step="1" value="16" /> 进制 &nbsp; &nbsp;
+        <input id="num2" type="text" value="0" readonly /> &nbsp; &nbsp;
+        序列：<input id="text2" type="text" maxlength="256" value="0123456789ABCDEF" /></p>
+        <p id="error" style="color: #FF0000;"></p>
+    </body>
+</html>
