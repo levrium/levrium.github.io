@@ -1,6 +1,6 @@
 @font-face {
     font-family: Helvetica;
-    src: url("Helvetica.ttf");
+    src: url("helvetica.ttf");
 }
 html, body {
     font: 24px/32px Helvetica, sans-serif;
