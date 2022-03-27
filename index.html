@@ -8,20 +8,86 @@
 html, body {
     color: #FFFFFF;
     background-color: #000000;
-    font: 24px/32px Georgia, "Times New Roman", serif;
+}
+body > p {
+    font-family: Georgia, "Times New Roman", serif;
 }
 div#links {
     margin: 32px 0px;
-    font-family: Helvetica, sans-serif;
+}
+div#maths > * {
+    margin: 8px 0px;
+}
+div#maths img {
+    filter: invert(100%);
+}
+div#maths > img {
+    display: block;
+}
+table {
+    border-collapse: collapse;
+}
+td {
+    padding: 8px;
+    border: 1px solid #FFFFFF;
+    text-align: center;
+}
+td img {
+    display: inline-block;
+    vertical-align: middle;
 }
 a {
     font-size: 20px;
-    line-height: 20px;
+    line-height: 28px;
 }
         </style>
         <script type="text/javascript">
-if (Math.random() < 0.1) {
-    window.location.href = "404.html";
+window.onload = function() {
+    var table = [
+        ["0", "0^\\circ", "0", "0", ""],
+        ["\\frac{\\pi}{60}", "3^\\circ", "\\frac{\\sqrt{2}\\left(\\sqrt{3}+1\\right)\\left(\\sqrt{5}-1\\right)-2\\left(\\sqrt{3}-1\\right)\\sqrt{5+\\sqrt{5}}}{16}", "\\frac{\\left(\\sqrt{3}-1\\right)\\left(\\sqrt{5}+1\\right)\\left(\\sqrt{5}-\\sqrt{3}\\right)\\left(\\sqrt{10-2\\sqrt{5}}-2\\right)}{8}", "\\frac{\\sqrt{2}\\left(\\sqrt{5}+\\sqrt{3}\\right)\\left(\\sqrt{5+2\\sqrt{5}}+2+\\sqrt{3}\\right)}{2}"],
+        ["\\frac{\\pi}{30}", "6^\\circ", "\\frac{\\sqrt{30-6\\sqrt{5}}-\\sqrt{5}-1}{8}", "\\frac{\\sqrt{10-2\\sqrt{5}}-\\sqrt{15}+\\sqrt{3}}{2}", "\\sqrt{15+6\\sqrt{5}}+\\sqrt{5}+2"],
+        ["\\frac{\\pi}{24}", "7.5^\\circ", "\\frac{\\sqrt{8-2\\sqrt{6}-2\\sqrt{2}}}{4}", "\\left(\\sqrt{3}-\\sqrt{2}\\right)\\left(\\sqrt{2}-1\\right)", "\\left(\\sqrt{3}+1\\right)\\sqrt{4+\\sqrt{6}+\\sqrt{2}}"],
+        ["\\frac{\\pi}{20}", "9^\\circ", "\\frac{-2\\sqrt{5-\\sqrt{5}}+\\sqrt{10}+\\sqrt{2}}{8}", "-\\sqrt{5+2\\sqrt{5}}+\\sqrt{5}+1", "\\frac{2\\sqrt{5+\\sqrt{5}}+3\\sqrt{2}+\\sqrt{10}}{2}"],
+        ["\\frac{\\pi}{15}", "12^\\circ", "\\frac{\\sqrt{10+2\\sqrt{5}}-\\sqrt{15}+\\sqrt{3}}{8}", "\\frac{\\left(3-\\sqrt{5}\\right)\\left(-\\sqrt{10-2\\sqrt{5}}+2\\sqrt{3}\\right)}{4}", "\\sqrt{5+2\\sqrt{5}}+\\sqrt{3}"],
+        ["\\frac{\\pi}{12}", "15^\\circ", "\\frac{\\sqrt{6}-\\sqrt{2}}{4}", "2-\\sqrt{3}", "\\sqrt{6}+\\sqrt{2}"],
+        ["\\frac{\\pi}{10}", "18^\\circ", "\\frac{\\sqrt{5}-1}{4}", "\\frac{\\sqrt{25-10\\sqrt{5}}}{5}", "\\sqrt{5}+1"],
+        ["\\frac{7\\pi}{60}", "21^\\circ", "\\frac{-\\sqrt{2}\\left(\\sqrt{3}-1\\right)\\left(\\sqrt{5}+1\\right)+2\\left(\\sqrt{3}+1\\right)\\sqrt{5-\\sqrt{5}}}{16}", "\\frac{\\left(\\sqrt{3}+1\\right)\\left(\\sqrt{5}-1\\right)\\left(\\sqrt{5}-\\sqrt{3}\\right)\\left(\\sqrt{10+2\\sqrt{5}}-2\\right)}{8}", "\\frac{\\sqrt{2}\\left(\\sqrt{5}+\\sqrt{3}\\right)\\left(\\sqrt{5-2\\sqrt{5}}+2-\\sqrt{3}\\right)}{2}"],
+        ["\\frac{\\pi}{8}", "22.5^\\circ", "\\frac{\\sqrt{2-\\sqrt{2}}}{2}", "\\sqrt{2}-1", "\\sqrt{4+2\\sqrt{2}}"],
+        ["\\frac{2\\pi}{15}", "24^\\circ", "\\frac{-\\sqrt{10-2\\sqrt{5}}+\\sqrt{15}+\\sqrt{3}}{8}", "\\frac{\\left(3+\\sqrt{5}\\right)\\left(\\sqrt{10+2\\sqrt{5}}-2\\sqrt{3}\\right)}{4}", "\\sqrt{5-2\\sqrt{5}}+\\sqrt{3}"],
+        ["\\frac{3\\pi}{20}", "27^\\circ", "\\frac{2\\sqrt{5+\\sqrt{5}}-\\sqrt{10}+\\sqrt{2}}{8}", "-\\sqrt{5+2\\sqrt{5}}+\\sqrt{5}-1", "\\frac{2\\sqrt{5-\\sqrt{5}}+3\\sqrt{2}-\\sqrt{10}}{2}"],
+        ["\\frac{\\pi}{6}", "30^\\circ", "\\frac{1}{2}", "\\frac{\\sqrt{3}}{3}", "2"],
+        ["\\frac{11\\pi}{60}", "33^\\circ", "\\frac{\\sqrt{2}\\left(\\sqrt{3}+1\\right)\\left(\\sqrt{5}-1\\right)+2\\left(\\sqrt{3}-1\\right)\\sqrt{5+\\sqrt{5}}}{16}", "\\frac{\\left(\\sqrt{3}-1\\right)\\left(\\sqrt{5}+1\\right)\\left(\\sqrt{5}-\\sqrt{3}\\right)\\left(\\sqrt{10-2\\sqrt{5}}+2\\right)}{8}", "\\frac{\\sqrt{2}\\left(\\sqrt{5}+\\sqrt{3}\\right)\\left(-\\sqrt{5+2\\sqrt{5}}+2+\\sqrt{3}\\right)}{2}"],
+        ["\\frac{\\pi}{5}", "36^\\circ", "\\frac{\\sqrt{10-2\\sqrt{5}}}{4}", "\\sqrt{5-2\\sqrt{5}}", "\\frac{\\sqrt{50+10\\sqrt{5}}}{5}"],
+        ["\\frac{5\\pi}{24}", "37.5^\\circ", "\\frac{\\sqrt{8-2\\sqrt{6}+2\\sqrt{2}}}{4}", "\\left(\\sqrt{3}-\\sqrt{2}\\right)\\left(\\sqrt{2}+1\\right)", "\\left(\\sqrt{3}-1\\right)\\sqrt{4+\\sqrt{6}-\\sqrt{2}}"],
+        ["\\frac{13\\pi}{60}", "39^\\circ", "\\frac{\\sqrt{2}\\left(\\sqrt{3}+1\\right)\\left(\\sqrt{5}+1\\right)-2\\left(\\sqrt{3}-1\\right)\\sqrt{5-\\sqrt{5}}}{16}", "\\frac{\\left(\\sqrt{3}-1\\right)\\left(\\sqrt{5}-1\\right)\\left(\\sqrt{5}+\\sqrt{3}\\right)\\left(\\sqrt{10+2\\sqrt{5}}-2\\right)}{8}", "\\frac{\\sqrt{2}\\left(\\sqrt{5}-\\sqrt{3}\\right)\\left(\\sqrt{5-2\\sqrt{5}}+2+\\sqrt{3}\\right)}{2}"],
+        ["\\frac{7\\pi}{30}", "42^\\circ", "\\frac{\\sqrt{30+6\\sqrt{5}}-\\sqrt{5}+1}{8}", "\\frac{-\\sqrt{10+2\\sqrt{5}}+\\sqrt{15}+\\sqrt{3}}{2}", "\\sqrt{15-6\\sqrt{5}}+\\sqrt{5}-2"],
+        ["\\frac{\\pi}{4}", "45^\\circ", "\\frac{\\sqrt{2}}{2}", "1", "\\sqrt{2}"],
+        ["\\frac{4\\pi}{15}", "48^\\circ", "\\frac{\\sqrt{10+2\\sqrt{5}}+\\sqrt{15}-\\sqrt{3}}{8}", "\\frac{\\left(3-\\sqrt{5}\\right)\\left(\\sqrt{10-2\\sqrt{5}}+2\\sqrt{3}\\right)}{4}", "\\sqrt{5+2\\sqrt{5}}-\\sqrt{3}"],
+        ["\\frac{17\\pi}{60}", "51^\\circ", "\\frac{\\sqrt{2}\\left(\\sqrt{3}-1\\right)\\left(\\sqrt{5}+1\\right)+2\\left(\\sqrt{3}+1\\right)\\sqrt{5-\\sqrt{5}}}{16}", "\\frac{\\left(\\sqrt{3}+1\\right)\\left(\\sqrt{5}-1\\right)\\left(\\sqrt{5}-\\sqrt{3}\\right)\\left(\\sqrt{10+2\\sqrt{5}}+2\\right)}{8}", "\\frac{\\sqrt{2}\\left(\\sqrt{5}+\\sqrt{3}\\right)\\left(\\sqrt{5-2\\sqrt{5}}-2+\\sqrt{3}\\right)}{2}"],
+        ["\\frac{7\\pi}{24}", "52.5^\\circ", "\\frac{\\sqrt{8+2\\sqrt{6}-2\\sqrt{2}}}{4}", "\\left(\\sqrt{3}+\\sqrt{2}\\right)\\left(\\sqrt{2}-1\\right)", "\\left(\\sqrt{3}-1\\right)\\sqrt{4-\\sqrt{6}+\\sqrt{2}}"],
+        ["\\frac{3\\pi}{10}", "54^\\circ", "\\frac{\\sqrt{5}+1}{4}", "\\frac{\\sqrt{25+10\\sqrt{5}}}{5}", "\\sqrt{5}-1"],
+        ["\\frac{19\\pi}{60}", "57^\\circ", "\\frac{-\\sqrt{2}\\left(\\sqrt{3}-1\\right)\\left(\\sqrt{5}-1\\right)+2\\left(\\sqrt{3}+1\\right)\\sqrt{5+\\sqrt{5}}}{16}", "\\frac{\\left(\\sqrt{3}+1\\right)\\left(\\sqrt{5}+1\\right)\\left(\\sqrt{5}+\\sqrt{3}\\right)\\left(\\sqrt{10-2\\sqrt{5}}-2\\right)}{8}", "\\frac{\\sqrt{2}\\left(\\sqrt{5}-\\sqrt{3}\\right)\\left(\\sqrt{5+2\\sqrt{5}}+2-\\sqrt{3}\\right)}{2}"],
+        ["\\frac{\\pi}{3}", "60^\\circ", "\\frac{\\sqrt{3}}{2}", "\\sqrt{3}", "\\frac{2\\sqrt{3}}{3}"],
+        ["\\frac{7\\pi}{20}", "63^\\circ", "\\frac{2\\sqrt{5+\\sqrt{5}}+\\sqrt{10}-\\sqrt{2}}{8}", "\\sqrt{5+2\\sqrt{5}}+\\sqrt{5}-1", "\\frac{2\\sqrt{5-\\sqrt{5}}-3\\sqrt{2}+\\sqrt{10}}{2}"],
+        ["\\frac{11\\pi}{30}", "66^\\circ", "\\frac{\\sqrt{30-6\\sqrt{5}}+\\sqrt{5}+1}{8}", "\\frac{\\sqrt{10-2\\sqrt{5}}+\\sqrt{15}-\\sqrt{3}}{2}", "\\sqrt{15+6\\sqrt{5}}-\\sqrt{5}-2"],
+        ["\\frac{3\\pi}{8}", "67.5^\\circ", "\\frac{\\sqrt{2+\\sqrt{2}}}{2}", "\\sqrt{2}+1", "\\sqrt{4-2\\sqrt{2}}"],
+        ["\\frac{23\\pi}{60}", "69^\\circ", "\\frac{\\sqrt{2}\\left(\\sqrt{3}+1\\right)\\left(\\sqrt{5}+1\\right)+2\\left(\\sqrt{3}-1\\right)\\sqrt{5-\\sqrt{5}}}{16}", "\\frac{\\left(\\sqrt{3}-1\\right)\\left(\\sqrt{5}-1\\right)\\left(\\sqrt{5}+\\sqrt{3}\\right)\\left(\\sqrt{10+2\\sqrt{5}}+2\\right)}{8}", "\\frac{\\sqrt{2}\\left(\\sqrt{5}-\\sqrt{3}\\right)\\left(-\\sqrt{5-2\\sqrt{5}}+2+\\sqrt{3}\\right)}{2}"],
+        ["\\frac{2\\pi}{5}", "72^\\circ", "\\frac{\\sqrt{10+2\\sqrt{5}}}{4}", "\\sqrt{5+2\\sqrt{5}}", "\\frac{\\sqrt{50-10\\sqrt{5}}}{5}"],
+        ["\\frac{5\\pi}{12}", "75^\\circ", "\\frac{\\sqrt{6}+\\sqrt{2}}{4}", "2+\\sqrt{3}", "\\sqrt{6}-\\sqrt{2}"],
+        ["\\frac{13\\pi}{30}", "78^\\circ", "\\frac{\\sqrt{30+6\\sqrt{5}}+\\sqrt{5}-1}{8}", "\\frac{\\sqrt{10+2\\sqrt{5}}+\\sqrt{15}+\\sqrt{3}}{2}", "\\sqrt{15-6\\sqrt{5}}-\\sqrt{5}+2"],
+        ["\\frac{9\\pi}{20}", "81^\\circ", "\\frac{2\\sqrt{5-\\sqrt{5}}+\\sqrt{10}+\\sqrt{2}}{8}", "\\sqrt{5+2\\sqrt{5}}+\\sqrt{5}+1", "\\frac{-2\\sqrt{5+\\sqrt{5}}+3\\sqrt{2}+\\sqrt{10}}{2}"],
+        ["\\frac{11\\pi}{24}", "82.5^\\circ", "\\frac{\\sqrt{8+2\\sqrt{6}+2\\sqrt{2}}}{4}", "\\left(\\sqrt{3}+\\sqrt{2}\\right)\\left(\\sqrt{2}+1\\right)", "\\left(\\sqrt{3}+1\\right)\\sqrt{4-\\sqrt{6}-\\sqrt{2}}"],
+        ["\\frac{7\\pi}{15}", "84^\\circ", "\\frac{\\sqrt{10-2\\sqrt{5}}+\\sqrt{15}+\\sqrt{3}}{8}", "\\frac{\\left(3+\\sqrt{5}\\right)\\left(\\sqrt{10+2\\sqrt{5}}+2\\sqrt{3}\\right)}{4}", "-\\sqrt{5-2\\sqrt{5}}+\\sqrt{3}"],
+        ["\\frac{29\\pi}{60}", "87^\\circ", "\\frac{\\sqrt{2}\\left(\\sqrt{3}-1\\right)\\left(\\sqrt{5}-1\\right)+2\\left(\\sqrt{3}+1\\right)\\sqrt{5+\\sqrt{5}}}{16}", "\\frac{\\left(\\sqrt{3}+1\\right)\\left(\\sqrt{5}+1\\right)\\left(\\sqrt{5}+\\sqrt{3}\\right)\\left(\\sqrt{10-2\\sqrt{5}}+2\\right)}{8}", "\\frac{\\sqrt{2}\\left(\\sqrt{5}-\\sqrt{3}\\right)\\left(\\sqrt{5+2\\sqrt{5}}-2+\\sqrt{3}\\right)}{2}"],
+        ["\\frac{\\pi}{2}", "90^\\circ", "1", "", "1"]
+    ];
+    var tbody = document.querySelector("table#sin tbody");
+    table.forEach(row => {
+        var tr = document.createElement("tr");
+        row.forEach(cell => tr.innerHTML += `<td><img src="https://www.zhihu.com/equation?tex=${encodeURIComponent(cell)}" /></td>`);
+        tbody.appendChild(tr);
+    });
 }
         </script>
     </head>
@@ -35,54 +101,25 @@ if (Math.random() < 0.1) {
             <p><a href="art/balls.html" target="_blank">art/Balls</a></p>
             <p><a href="art/flicker.html" target="_blank">art/Flicker</a></p>
             <p><a href="art/nothing.html" target="_blank">art/Nothing</a></p>
-            <p><a href="t/" target="_blank">Tetr.js</a></p>
+            <!--<p><a href="t/" target="_blank">Tetr.js+</a></p>-->
             <p><a href="calculator.html" target="_blank">Calculator</a></p>
             <p><a href="keyboard.html" target="_blank">Keyboard</a></p>
             <p><a href="time.html" target="_blank">Time</a></p>
         </div>
-        <img src="https://www.zhihu.com/equation?tex=e%5E%7Bi%5Cpi%7D%2B1%3D0" style="height: 2em;filter: invert(100%);" /><br />
-        <img src="https://www.zhihu.com/equation?tex=%5Cfrac%7B1%7D%7B%5Cpi%7D%20%3D%20%5Cfrac%7B2%5Csqrt%7B2%7D%7D%7B9801%7D%5Csum_%7Bk%3D0%7D%5E%5Cinfty%5Cfrac%7B(4k)!(1103%2B26390k)%7D%7B(k!)%5E4396%5E%7B4k%7D%7D" style="height: 4em;filter: invert(100%);" />
-        <div id="articles">
-            <p>Shall I compare thee to a summer's day?</p>
-            <p>William Shakespeare</p>
-            <br />
-            <p>Shall I compare thee to a summer's day?</p>
-            <p>Thou art more lovely and more temperate.</p>
-            <p>Rough winds do shake the darling buds of May,</p>
-            <p>And summer's lease hath all too short a date:</p>
-            <p>Sometimes too hot the eye of heaven shines,</p>
-            <p>And often is his gold complexion dimmed;</p>
-            <p>And every fair from fair somethme declines,</p>
-            <p>By chance, or nature's changing course, untrimmed:</p>
-            <p>But thy eternal summer shall not fade,</p>
-            <p>Nor lose possession of that fair thou owest;</p>
-            <p>Nor shall Death brag thou wanderest in his shade</p>
-            <p>When in eternal lines to time thou growest.</p>
-            <p>So long as men can breathe or eyes can see,</p>
-            <p>So long lives this, and this gives life to thee.</p>
-            <br />
-            <br />
-            <p>Youth</p>
-            <p>Samuel Ullman</p>
-            <br />
-            <p>Youth is not a time of life, it is a state of mind;</p>
-            <p>it is not a matter of rosy cheeks, red lips and supple knees;</p>
-            <p>it is a matter of the will, a quality of the imagination, a vigor of the emotions;</p>
-            <p>it is the freshness of the deep springs of life.</p>
-            <p>Youth means a temperamental predominance of courage over timidity,</p>
-            <p>of the appetite for adventure over the love of ease.</p>
-            <p>This often exists in a man of sixty more than a boy of twenty.</p>
-            <p>Nobody grows old merely by a number of years.</p>
-            <p>We grow old by deserting our ideals.</p>
-            <p>Years may wrinkle the skin, but to give up enthusiasm wrinkles the soul.</p>
-            <p>Worry, fear, self-distrust bows the heart and turns the spirit back to dust.</p>
-            <p>Whether sixty or sixteen, there is in every human being's heart the lure of wonder,</p>
-            <p>the unfailing child-like appetite of what's next, and the joy of the game of living.</p>
-            <p>In the center of your heart and my heart there is a wireless station;</p>
-            <p>so long as it receives messages of beauty, hope, cheer, courage and power from men and from the infinite, so long are you young.</p>
-            <p>When the aerials are down, and your spirit is covered with snows of cynicism and the ice of pessimism,</p>
-            <p>then you are grown old, even at twenty, but as long as your aerials are up, to catch the waves of optimism,</p>
-            <p>there is hope you may die young at eighty.</p>
+        <div id="maths">
+            <img src="https://www.zhihu.com/equation?tex=e%5E%7Bi%5Cpi%7D%2B1%3D0" />
+            <img src="https://www.zhihu.com/equation?tex=%5Cfrac%7B1%7D%7B%5Cpi%7D%20%3D%20%5Cfrac%7B2%5Csqrt%7B2%7D%7D%7B9801%7D%5Csum_%7Bk%3D0%7D%5E%5Cinfty%5Cfrac%7B(4k)!(1103%2B26390k)%7D%7B(k!)%5E4396%5E%7B4k%7D%7D" />
+            <table id="sin">
+                <thead>
+                    <tr>
+                        <td colspan="2"><img src="https://www.zhihu.com/equation?tex=%5Calpha" /></td>
+                        <td><img src="https://www.zhihu.com/equation?tex=%5Csin%5Calpha" /></td>
+                        <td><img src="https://www.zhihu.com/equation?tex=%5Ctan%5Calpha" /></td>
+                        <td><img src="https://www.zhihu.com/equation?tex=%5Ccsc%5Calpha" /></td>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
         </div>
     </body>
 </html>
