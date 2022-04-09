@@ -1,4 +1,6 @@
 html, body {
+    color: #FFFFFF;
+    background-color: #000000;
     font: 24px "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 h1, h2, h3, h4, h5, h6, p {
