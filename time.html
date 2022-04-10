@@ -92,9 +92,9 @@ body {
 }
         </style>
         <script type="text/javascript">
-function format(n, digits) {
+function fill(n, length) {
     n = String(n);
-    while (n.length < digits) {
+    while (n.length < length) {
         n = "0" + n;
     }
     return n;
@@ -117,11 +117,11 @@ function time() {
     var sec = date.getSeconds();
     var ms = date.getMilliseconds();
     var secToday = hour * 3600 + min * 60 + sec + ms / 1000;
-    lineHour.style.transform = dotHour.style.transform = `rotate(${secToday / 600}deg)`;
+    lineHour.style.transform = dotHour.style.transform = `rotate(${secToday / 120}deg)`;
     lineMin.style.transform = dotMin.style.transform = `rotate(${secToday / 10}deg)`;
     lineSec.style.transform = dotSec.style.transform = `rotate(${secToday * 6}deg)`;
-    textDate.innerText = `${year} - ${format(month, 2)} - ${format(day, 2)}`;
-    textTime.innerText = `${format(hour, 2)} : ${format(min, 2)} : ${format(sec, 2)}`;
+    textDate.innerText = `${year} - ${fill(month, 2)} - ${fill(day, 2)}`;
+    textTime.innerText = `${fill(hour, 2)} : ${fill(min, 2)} : ${fill(sec, 2)}`;
 }
 function setTitle() {
     var title = document.querySelector("title");
@@ -131,7 +131,7 @@ function setTitle() {
     var day = date.getDate();
     var hour = date.getHours();
     var min = date.getMinutes();
-    title.innerText = `${year}-${format(month, 2)}-${format(day, 2)} ${format(hour, 2)}:${format(min, 2)}`;
+    title.innerText = `${year}-${fill(month, 2)}-${fill(day, 2)} ${fill(hour, 2)}:${fill(min, 2)}`;
 }
 window.onload = function() {
     setTitle();
