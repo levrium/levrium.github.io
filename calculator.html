@@ -25,7 +25,7 @@ input[type="button"]:hover {
     background-color: #FFFFFF;
 }
 textarea {
-    width: 50%;
+    width: 75%;
     height: 5em;
     padding: 4px;
     border: 2px solid #B0B0B0;
@@ -36,7 +36,7 @@ textarea {
     font-size: 18px;
 }
 #factorization input[type="text"] {
-    width: 50%;
+    width: 75%;
 }
 #base-conversion .base {
     width: 60px;
@@ -55,7 +55,7 @@ textarea {
     width: 40px;
 }
 #monadic-equation input[type="text"] {
-    width: 50%;
+    width: 75%;
     margin: 8px 0px;
     display: block;
 }
@@ -66,6 +66,9 @@ class Factorization {
         var button = document.querySelector('#factorization input[type="button"]');
         var input = document.querySelector('#factorization input[type="text"]');
         button.onclick = () => {
+            if (!input.value) {
+                return;
+            }
             try {
                 var n = BigInt(input.value);
                 if (n < 0n) {
@@ -97,33 +100,35 @@ class Factorization {
             if (n == 1) {
                 return [1n];
             }
-            var factors = [];
+            var factors = {};
             while (n % 2n == 0n) {
-                factors.push(2n);
+                factors[2n] = (factors[2n] || 0) + 1;
                 n /= 2n;
             }
             while (n % 3n == 0n) {
-                factors.push(3n);
+                factors[3n] = (factors[3n] || 0) + 1;
                 n /= 3n;
             }
             var limit = sqrt(n);
-            for (let i = 5n; i <= limit; i += 6n) {
+            for (let i = 5n; i <= limit; ) {
                 while (n % i == 0n) {
-                    factors.push(i);
+                    factors[i] = (factors[i] || 0) + 1;
                     n /= i;
                     limit = sqrt(n);
                 }
-                while (n % (i + 2n) == 0n) {
-                    factors.push(i + 2n);
-                    n /= i + 2n;
+                i += 2n;
+                while (n % i == 0n) {
+                    factors[i] = (factors[i] || 0) + 1;
+                    n /= i;
                     limit = sqrt(n);
                 }
-                yield [n > 1n ? factors.concat([n]) : factors, i, limit];
+                i += 4n;
+                yield [factors, n, i, limit];
             }
             if (n > 1n) {
-                factors.push(n);
+                factors[n] = (factors[n] || 0) + 1;
             }
-            return [factors, limit, limit];
+            return [factors, 1n, limit, limit];
         }
         var button = document.querySelector('#factorization input[type="button"]');
         var output = document.querySelectorAll('#factorization input[type="text"]')[1];
@@ -131,20 +136,26 @@ class Factorization {
         button.disabled = "true";
         textProgress.style.display = "inline";
         var calc = Calc(n);
-        function loop(self) {
+        function loop() {
             var result = calc.next();
             for (let i = 0; i < 65536 && !result.done; i++) {
                 result = calc.next();
             }
-            var progress = String(result.value[1] * 1000000n / result.value[2]);
+            var factors = {...result.value[0]};
+            if (result.value[1] > 1n) {
+                factors[result.value[1]] = (factors[result.value[1]] || 0) + 1;
+            }
+            var list = Object.keys(factors);
+            list = list.map(item => factors[item] > 1 ? `${item}^${factors[item]}` : item);
+            output.value = `${n} = ${list.join(" × ")}`;
+            var progress = String(result.value[2] * 1000000n / result.value[3]);
             while (progress.length < 5) {
                 progress = "0" + progress;
             }
             progress = progress.split("");
             progress.splice(-4, 0, ".");
             progress = progress.join("");
-            output.value = `${n} = ${result.value[0].join(" × ")}`;
-            textProgress.innerText = `${progress}% (${result.value[1]} / ${result.value[2]})`;
+            textProgress.innerText = `${progress}% (${result.value[2]} / ${result.value[3]})`;
             if (result.done) {
                 button.disabled = "";
                 textProgress.style.display = "none";
@@ -153,7 +164,7 @@ class Factorization {
                 setTimeout(loop, 1);
             }
         }
-        loop(this);
+        loop();
     }
 }
 class BaseConversion {
@@ -161,7 +172,7 @@ class BaseConversion {
         document.querySelectorAll("#base-conversion .base").forEach((e, i) => e.oninput = () => {
             var base = Number(document.querySelectorAll("#base-conversion .base")[i].value);
             var sequence = document.querySelectorAll("#base-conversion .sequence")[i];
-            if (!isNaN(base) && base >= 2 && base <= 256 && base % 1 == 0) {
+            if (!isNaN(base) && base >= 2 && base <= 256 && !base % 1) {
                 sequence.value = this.getText(base);
             }
             this.main();
@@ -172,13 +183,11 @@ class BaseConversion {
     }
     plus(a, b, base) {
         if (a.length < b.length) {
-            var c = a;
-            a = b;
-            b = c;
+            [a, b] = [b, a];
         }
-        c = 0;
-        for (var i = a.length - 1; i >= 0; i--) {
-            var d = i < a.length - b.length ? 0 : b[i + b.length - a.length];
+        var c = 0;
+        for (let i = a.length - 1; i >= 0; i--) {
+            let d = i < a.length - b.length ? 0 : b[i - a.length + b.length];
             a[i] += c + d;
             c = ~~(a[i] / base);
             a[i] %= base;
@@ -190,13 +199,13 @@ class BaseConversion {
     }
     multiple(a, b, base) {
         var r = [];
-        for (var j = 0; j < b.length; j++) {
-            for (var i = 0;i < a.length;i++) {
+        for (let j = 0; j < b.length; j++) {
+            for (let i = 0; i < a.length; i++) {
                 r.push([a[i] * b[j]].concat(new Array(a.length + b.length - i - j - 2).fill(0)));
             }
         }
         var result = [];
-        for (var i = 0; i < r.length; i++) {
+        for (let i = 0; i < r.length; i++) {
             result = this.plus(result, r[i], base);
         }
         return result;
@@ -206,7 +215,7 @@ class BaseConversion {
         if (b == 0) {
             return [1];
         }
-        for (var i = 1; i < b; i++) {
+        for (let i = 1; i < b; i++) {
             result = this.multiple(result, a, base);
         }
         return result;
@@ -248,24 +257,24 @@ class BaseConversion {
         var text2 = document.querySelectorAll("#base-conversion .sequence")[1].value;
         var error = document.querySelector("#base-conversion #error");
         error.innerText = "";
-        if (isNaN(base1) || base1 < 2 || base1 > 256 || base1 % 1 != 0) {
-            error.innerText = "非法的初始进制";
+        if (isNaN(base1) || base1 < 2 || base1 > 256 || base1 % 1) {
+            error.innerText = "无效的初始进制";
             return;
         }
-        if (num1 == "") {
+        if (!num1) {
             error.innerText = "初始数字为空";
             return;
         }
         if (text1.length != base1) {
-            error.innerText = "非法的初始序列";
+            error.innerText = "无效的初始序列";
             return;
         }
-        if (isNaN(base2) || base2 < 2 || base2 > 256 || base2 % 1 != 0) {
-            error.innerText = "非法的目标进制";
+        if (isNaN(base2) || base2 < 2 || base2 > 256 || base2 % 1) {
+            error.innerText = "无效的目标进制";
             return;
         }
         if (text2.length != base2) {
-            error.innerText = "非法的目标序列";
+            error.innerText = "无效的目标序列";
             return;
         }
         if (!/[a-z]/.test(text1)) {
@@ -275,8 +284,8 @@ class BaseConversion {
             num1 = num1.toLowerCase();
         }
         var n = [];
-        for (var i = 0; i < num1.length; i++) {
-            var d = text1.indexOf(num1.charAt(i));
+        for (let i = 0; i < num1.length; i++) {
+            let d = text1.indexOf(num1.charAt(i));
             if (d == -1) {
                 error.innerText = "初始数字中有未定义的位";
                 return;
@@ -286,17 +295,16 @@ class BaseConversion {
             }
         }
         var result = [];
-        for (var i = 0; i < n.length; i++) {
+        for (let i = 0; i < n.length; i++) {
             result = this.plus(result, this.multiple([n[i]], this.power([base1], n.length - i - 1, base2), base2), base2);
         }
-        while (result.length > 1 && result[0] == 0) {
+        while (result.length > 1 && !result[0]) {
             result.shift();
         }
-        for (var i = 0; i < result.length; i++) {
+        for (let i = 0; i < result.length; i++) {
             result[i] = text2.charAt(result[i]);
         }
-        result = result.join("");
-        inputNumber.value = result;
+        inputNumber.value = result.join("");
     }
 }
 
@@ -306,6 +314,9 @@ class MonadicEquation {
         var input = document.querySelectorAll("#monadic-equation input")[1];
         var output = document.querySelector("#monadic-equation textarea");
         button.onclick = () => {
+            if (!input.value) {
+                return;
+            }
             var params = input.value.split(" ").filter(item => item).map(Number);
             if (params.includes(NaN)) {
                 alert("参数错误");
@@ -484,6 +495,9 @@ class LinearEquation {
         var input = document.querySelector("#linear-equation textarea");
         var output = document.querySelectorAll("#linear-equation textarea")[1];
         button.onclick = () => {
+            if (!input.value) {
+                return;
+            }
             try {
                 var params = input.value.split("\n").filter(item => item).map(item => item.split(" ").filter(item => item).map(Number));
                 var result = this.solve(params);
@@ -502,31 +516,31 @@ class LinearEquation {
             }
         }
     }
-    det(det) { // calculate determinant
+    det(det) { // calculate determinants
         if (!det.every(item => item.length == det.length)) {
             throw RangeError;
         }
-        var n = det.length;
+        var n = det.length;
         if (n == 3) {
-            return det[0][0] * det[1][1] * det[2][2] - det[0][0] * det[1][2] * det[2][1] - det[0][1] * det[1][0] * det[2][2] + det[0][1] * det[1][2] * det[2][0] + det[0][2] * det[1][0] * det[2][1] - det[0][2] * det[1][1] * det[2][0];
-        }
+            return det[0][0] * det[1][1] * det[2][2] - det[0][0] * det[1][2] * det[2][1] - det[0][1] * det[1][0] * det[2][2] + det[0][1] * det[1][2] * det[2][0] + det[0][2] * det[1][0] * det[2][1] - det[0][2] * det[1][1] * det[2][0];
+        }
         if (n == 2) {
-            return det[0][0] * det[1][1] - det[0][1] * det[1][0];
-        }
+            return det[0][0] * det[1][1] - det[0][1] * det[1][0];
+        }
         if (n == 1) {
-            return det[0][0];
-        }
-        var result = 0;
-        for (let col = 0; col < n; col++) {
-            let matrix = new Array(n - 1).fill(0).map(() => new Array(n - 1).fill(0));
-            for (let i = 0; i < n - 1; i++) {
-                for (let j = 0; j < n - 1; j++) {
-                    matrix[i][j] = det[i + 1][j < col ? j : j + 1];
-                }
-            }
-            result += (col % 2 == 1 ? -1 : 1) * det[0][col] * this.det(matrix);
-        }
-        return result;
+            return det[0][0];
+        }
+        var result = 0;
+        for (let col = 0; col < n; col++) {
+            let matrix = new Array(n - 1).fill(0).map(() => new Array(n - 1).fill(0));
+            for (let i = 0; i < n - 1; i++) {
+                for (let j = 0; j < n - 1; j++) {
+                    matrix[i][j] = det[i + 1][j < col ? j : j + 1];
+                }
+            }
+            result += (col % 2 ? -1 : 1) * det[0][col] * this.det(matrix);
+        }
+        return result;
     }
     cutOut(array, n) { // cut out column n of array
         return array.map(item => item.filter((item, i) => i != n));
@@ -559,7 +573,7 @@ window.onload = () => {
         <section id="factorization">
             <header>分解质因数</header>
             <p>
-                <input type="text" value="" style="width: 30%; text-align: right;" />
+                <input type="text" value="" style="width: 50%; text-align: right;" />
                 <input type="button" value="分解" />
                 &nbsp; <span style="display: none;"></span>
             </p>
