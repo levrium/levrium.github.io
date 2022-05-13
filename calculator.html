@@ -66,7 +66,7 @@ class Factorization {
         var button = document.querySelector('#factorization input[type="button"]');
         var input = document.querySelector('#factorization input[type="text"]');
         button.onclick = () => {
-            if (!input.value) {
+            if (input.value === "") {
                 return;
             }
             try {
@@ -74,50 +74,57 @@ class Factorization {
                 if (n < 0n) {
                     throw RangeError;
                 }
+                this.factorize(n);
             }
             catch {
                 alert("无效的数字");
             }
-            this.factorize(n);
-        }
+        };
     }
     factorize(n) {
         function sqrt(n) {
             if (n <= Number.MAX_SAFE_INTEGER) {
                 return BigInt(~~(Number(n) ** 0.5));
             }
-            else {
-                var string = String(n);
-                var a = Number(string.slice(0, 14 + string.length % 2));
-                var b = ~~(string.length / 2) - 7;
-                return BigInt(Math.ceil(a ** 0.5)) * 10n ** BigInt(b);
+            var array = String(n).split("").map(Number);
+            if (array.length % 2 === 1) {
+                array.unshift(0);
             }
+            var length = array.length / 2;
+            var remainder = 0n;
+            var result = [];
+            for (let i = 0; i < length; i++) {
+                remainder = remainder * 100n + BigInt(array.shift()) * 10n + BigInt(array.shift());
+                let a = BigInt(result.join("")) * 20n;
+                let j = 0n;
+                for (; j < 10n && j * (a + j) <= remainder; j++) {}
+                result.push(--j);
+                remainder -= j * (a + j);
+            }
+            return BigInt(result.join(""));
         }
         function* Calc(n) {
-            if (n == 0) {
-                return [0n];
-            }
-            if (n == 1) {
-                return [1n];
+            if (n === 0n || n === 1n) {
+                return [n];
             }
             var factors = {};
-            while (n % 2n == 0n) {
+            while (n % 2n === 0n) {
                 factors[2n] = (factors[2n] || 0) + 1;
                 n /= 2n;
             }
-            while (n % 3n == 0n) {
+            while (n % 3n === 0n) {
                 factors[3n] = (factors[3n] || 0) + 1;
                 n /= 3n;
             }
             var limit = sqrt(n);
             for (let i = 5n; i <= limit; ) {
-                while (n % i == 0n) {
+                while (n % i === 0n) {
                     factors[i] = (factors[i] || 0) + 1;
                     n /= i;
                     limit = sqrt(n);
                 }
                 i += 2n;
-                while (n % i == 0n) {
+                while (n % i === 0n) {
                     factors[i] = (factors[i] || 0) + 1;
                     n /= i;
                     limit = sqrt(n);
@@ -172,14 +179,14 @@ class BaseConversion {
         document.querySelectorAll("#base-conversion .base").forEach((e, i) => e.oninput = () => {
             var base = Number(document.querySelectorAll("#base-conversion .base")[i].value);
             var sequence = document.querySelectorAll("#base-conversion .sequence")[i];
-            if (!isNaN(base) && base >= 2 && base <= 256 && !base % 1) {
+            if (!isNaN(base) && base >= 2 && base <= 256 && base % 1 === 0) {
                 sequence.value = this.getText(base);
             }
             this.main();
-        });
-        document.querySelector("#base-conversion .number").oninput = this.main;
-        document.querySelectorAll("#base-conversion .sequence").forEach(e => e.oninput = this.main);
-        document.querySelector("#swap").onclick = this.swap;
+        }, this);
+        document.querySelector("#base-conversion .number").oninput = () => this.main();
+        document.querySelectorAll("#base-conversion .sequence").forEach(e => e.oninput = () => this.main());
+        document.querySelector("#swap").onclick = () => this.swap();
     }
     plus(a, b, base) {
         if (a.length < b.length) {
@@ -212,7 +219,7 @@ class BaseConversion {
     }
     power(a, b, base) {
         var result = a;
-        if (b == 0) {
+        if (b === 0) {
             return [1];
         }
         for (let i = 1; i < b; i++) {
@@ -232,7 +239,7 @@ class BaseConversion {
             case 58 :
                 return "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
             default :
-                return text.substr(0, base);
+                return text.slice(0, base);
         }
     }
     swap() {
@@ -246,7 +253,7 @@ class BaseConversion {
         inputNumber[0].value = inputNumber[1].value;
         inputSequence[0].value = inputSequence[1].value;
         inputSequence[1].value = sequence;
-        main();
+        this.main();
     }
     main() {
         var base1 = Number(document.querySelectorAll("#base-conversion .base")[0].value);
@@ -255,9 +262,9 @@ class BaseConversion {
         var base2 = Number(document.querySelectorAll("#base-conversion .base")[1].value);
         var inputNumber = document.querySelectorAll("#base-conversion .number")[1];
         var text2 = document.querySelectorAll("#base-conversion .sequence")[1].value;
-        var error = document.querySelector("#base-conversion #error");
+        var error = document.querySelector("#base-conversion .error");
         error.innerText = "";
-        if (isNaN(base1) || base1 < 2 || base1 > 256 || base1 % 1) {
+        if (isNaN(base1) || base1 < 2 || base1 > 256 || base1 % 1 !== 0) {
             error.innerText = "无效的初始进制";
             return;
         }
@@ -265,15 +272,15 @@ class BaseConversion {
             error.innerText = "初始数字为空";
             return;
         }
-        if (text1.length != base1) {
+        if (text1.length !== base1) {
             error.innerText = "无效的初始序列";
             return;
         }
-        if (isNaN(base2) || base2 < 2 || base2 > 256 || base2 % 1) {
+        if (isNaN(base2) || base2 < 2 || base2 > 256 || base2 % 1 !== 0) {
             error.innerText = "无效的目标进制";
             return;
         }
-        if (text2.length != base2) {
+        if (text2.length !== base2) {
             error.innerText = "无效的目标序列";
             return;
         }
@@ -286,7 +293,7 @@ class BaseConversion {
         var n = [];
         for (let i = 0; i < num1.length; i++) {
             let d = text1.indexOf(num1.charAt(i));
-            if (d == -1) {
+            if (d === -1) {
                 error.innerText = "初始数字中有未定义的位";
                 return;
             }
@@ -298,7 +305,7 @@ class BaseConversion {
         for (let i = 0; i < n.length; i++) {
             result = this.plus(result, this.multiple([n[i]], this.power([base1], n.length - i - 1, base2), base2), base2);
         }
-        while (result.length > 1 && !result[0]) {
+        while (result.length > 1 && result[0] === 0) {
             result.shift();
         }
         for (let i = 0; i < result.length; i++) {
@@ -314,15 +321,15 @@ class MonadicEquation {
         var input = document.querySelectorAll("#monadic-equation input")[1];
         var output = document.querySelector("#monadic-equation textarea");
         button.onclick = () => {
-            if (!input.value) {
+            if (input.value === "") {
                 return;
             }
-            var params = input.value.split(" ").filter(item => item).map(Number);
+            var params = input.value.split(" ").filter(a => a).map(Number);
             if (params.includes(NaN)) {
                 alert("参数错误");
                 return;
             }
-            while (params[0] == 0) {
+            while (params[0] === 0) {
                 params.shift();
             }
             if (params.length <= 1) {
@@ -348,16 +355,8 @@ class MonadicEquation {
                         return;
                 }
                 result = result.map(item => {
-                    if (typeof item == "object") {
-                        if (item[1] > 0) {
-                            return `${item[0]} + ${item[1]} i`;
-                        }
-                        else if (item[1] < 0) {
-                            return `${item[0]} - ${-item[1]} i`;
-                        }
-                        else {
-                            return item[0];
-                        }
+                    if (typeof item === "object") {
+                        return item[1] > 0 ? `${item[0]} + ${item[1]} i` : item[1] < 0 ? `${item[0]} - ${-item[1]} i` : item[0];
                     }
                     else {
                         return item;
@@ -365,7 +364,7 @@ class MonadicEquation {
                 });
                 output.value = result.map((item, i) => `x_${i + 1} = ${item}`).join("\n");
             }
-        }
+        };
     }
     solveLinear(a, b) {
         return [-b / a];
@@ -381,11 +380,11 @@ class MonadicEquation {
         var B = b * c - 9 * a * d;
         var C = c ** 2 - 3 * b * d;
         var Δ = B ** 2 - 4 * A * C;
-        if (A == 0 && B == 0) {
+        if (A === 0 && B === 0) {
             let x = -b / (3 * a);
             return [x, x, x];
         }
-        else if (Δ == 0) {
+        else if (Δ === 0) {
             let k = B / A;
             let x = -k / 2;
             return [k - b / a, x, x];
@@ -416,22 +415,22 @@ class MonadicEquation {
         var B = D * F - 9 * E ** 2;
         var C = F ** 2 - 3 * D * E ** 2;
         var Δ = B ** 2 - 4 * A * C;
-        if (D == 0 && E == 0 && F == 0) {
+        if (D === 0 && E === 0 && F === 0) {
             let x = -b / (4 * a);
             return [x, x, x, x];
         }
-        else if (D * E * F != 0 && A == 0 && B == 0 && C == 0) {
+        else if (D !== 0 && E !== 0 && F !== 0 && A === 0 && B === 0 && C === 0) {
             let m = -b / (4 * a);
             let n = (3 * E) / (4 * a * D);
             let x = m - n;
             return [m + 3 * n, x, x, x];
         }
-        else if (D != 0 && E == 0 && F == 0) {
+        else if (D !== 0 && E === 0 && F === 0) {
             let m = -b / (4 * a);
             let n = Math.abs(D) ** 0.5 / (4 * a);
             return D >= 0 ? [m + n, m + n, m - n, m - n] : [[m, n], [m, n], [m, -n], [m, -n]];
         }
-        else if (A * B * C != 0 && Δ == 0) {
+        else if (A !== 0 && B !== 0 && C !== 0 && Δ === 0) {
             let m = 2 * A * E / B;
             let n = 2 * B / A;
             let p = (m - b) / (4 * a);
@@ -458,7 +457,7 @@ class MonadicEquation {
             let y_2 = (D + A ** 0.5 * (Math.cos(θ) + 3 ** 0.5 * Math.sin(θ))) / 3;
             let y_3 = (D + A ** 0.5 * (Math.cos(θ) - 3 ** 0.5 * Math.sin(θ))) / 3;
             let m = -b / (4 * a);
-            if (E == 0) {
+            if (E === 0) {
                 if (F > 0) {
                     let n = (Math.abs(D) + 2 * F ** 0.5) ** 0.5 / (4 * a);
                     let p = (Math.abs(D) - 2 * F ** 0.5) ** 0.5 / (4 * a);
@@ -495,11 +494,11 @@ class LinearEquation {
         var input = document.querySelector("#linear-equation textarea");
         var output = document.querySelectorAll("#linear-equation textarea")[1];
         button.onclick = () => {
-            if (!input.value) {
+            if (input.value === "") {
                 return;
             }
             try {
-                var params = input.value.split("\n").filter(item => item).map(item => item.split(" ").filter(item => item).map(Number));
+                var params = input.value.split("\n").filter(a => a).map(item => item.split(" ").filter(a => a).map(Number));
                 var result = this.solve(params);
                 if (result === null) {
                     output.value = "无解";
@@ -514,21 +513,20 @@ class LinearEquation {
             catch {
                 alert("参数错误");
             }
-        }
+        };
     }
     det(det) { // calculate determinants
-        if (!det.every(item => item.length == det.length)) {
+        if (!det.every(item => item.length === det.length)) {
             throw RangeError;
         }
         var n = det.length;
-        if (n == 3) {
-            return det[0][0] * det[1][1] * det[2][2] - det[0][0] * det[1][2] * det[2][1] - det[0][1] * det[1][0] * det[2][2] + det[0][1] * det[1][2] * det[2][0] + det[0][2] * det[1][0] * det[2][1] - det[0][2] * det[1][1] * det[2][0];
-        }
-        if (n == 2) {
-            return det[0][0] * det[1][1] - det[0][1] * det[1][0];
-        }
-        if (n == 1) {
-            return det[0][0];
+        switch (n) {
+            case 1 :
+                return det[0][0];
+            case 2 :
+                return det[0][0] * det[1][1] - det[0][1] * det[1][0];
+            case 3 :
+                return det[0][0] * det[1][1] * det[2][2] - det[0][0] * det[1][2] * det[2][1] - det[0][1] * det[1][0] * det[2][2] + det[0][1] * det[1][2] * det[2][0] + det[0][2] * det[1][0] * det[2][1] - det[0][2] * det[1][1] * det[2][0];
         }
         var result = 0;
         for (let col = 0; col < n; col++) {
@@ -538,26 +536,25 @@ class LinearEquation {
                     matrix[i][j] = det[i + 1][j < col ? j : j + 1];
                 }
             }
-            result += (col % 2 ? -1 : 1) * det[0][col] * this.det(matrix);
+            result += (-1) ** (col % 2) * det[0][col] * this.det(matrix);
         }
         return result;
     }
     cutOut(array, n) { // cut out column n of array
-        return array.map(item => item.filter((item, i) => i != n));
+        return array.map(item => item.filter((item, i) => i !== n));
     }
     solve(a) {
-        if (!a.every(item => item.every(item => !isNaN(item)))) {
+        if (!a.every(item => item.every(item => !isNaN(item)) && item.length === a.length + 1)) {
             throw TypeError;
         }
-        if (!a.every(item => item.length == a.length + 1)) {
-            throw RangeError;
-        }
-        var p = a.map((item, i) => ((a.length + i) % 2 == 0 ? 1 : -1) * this.det(this.cutOut(a, i)));
+        var p = a.map((item, i) => ((-1) ** (a.length + i)) * this.det(this.cutOut(a, i)));
         var q = this.det(this.cutOut(a, a.length));
-        if (!q) {
+        if (q === 0) {
             return p[0] ? null : undefined; // null: no solution, undefined: infinite solutions
         }
-        return p.map(item => item / q);
+        else {
+            return p.map(item => item / q);
+        }
     }
 }
 
@@ -566,7 +563,7 @@ window.onload = () => {
     var baseConversion = new BaseConversion();
     var monadicEquation = new MonadicEquation();
     var linearEquation = new LinearEquation();
-}
+};
         </script>
     </head>
     <body>
@@ -592,7 +589,7 @@ window.onload = () => {
                 <input class="number" type="text" value="0" readonly /> &nbsp; &nbsp;
                 序列：<input class="sequence" type="text" maxlength="256" value="0123456789ABCDEF" />
             </p>
-            <p id="error" style="color: #FF0000;"></p>
+            <p class="error" style="color: #FF0000;"></p>
         </section>
         <section id="monadic-equation">
             <header>解一元n次方程</header>
