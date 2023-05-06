@@ -2,124 +2,42 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>LIME</title>
-        <link href="style.css" type="text/css" rel="stylesheet" />
+        <title>Λεμόνι</title>
         <style type="text/css">
-html, body {
+html, body, pre {
     color: #FFFFFF;
     background-color: #000000;
+    font: 24px Consolas, "Courier New", "微软雅黑", sans-serif;
 }
-body > p {
-    font-family: Georgia, "Times New Roman", serif;
+pre {
+    margin: 0px;
+    line-height: 1.25em;
 }
-div#links {
-    margin: 32px 0px;
+a:link, a:visited {
+    color: #FFFFFF;
+    text-decoration: underline;
 }
-div#maths > * {
-    margin: 8px 0px;
-}
-div#maths img {
-    filter: invert(100%);
-}
-div#maths > img {
-    display: block;
-}
-table {
-    border-collapse: collapse;
-}
-td {
-    padding: 8px;
-    border: 1px solid #FFFFFF;
-    text-align: center;
-}
-td img {
-    display: inline-block;
-    vertical-align: middle;
-}
-a {
-    font-size: 20px;
-    line-height: 28px;
+a:hover, a:active {
+    color: #E0E0E0;
+    text-decoration: underline;
 }
         </style>
-        <script type="text/javascript">
-var table = [
-    ["0", "0^\\circ", "0", "0", "1"],
-    ["\\frac{\\pi}{60}", "3^\\circ", "\\frac{\\sqrt{2}\\left(\\sqrt{3}+1\\right)\\left(\\sqrt{5}-1\\right)-2\\left(\\sqrt{3}-1\\right)\\sqrt{5+\\sqrt{5}}}{16}", "\\frac{\\left(\\sqrt{3}-1\\right)\\left(\\sqrt{5}+1\\right)\\left(\\sqrt{5}-\\sqrt{3}\\right)\\left(\\sqrt{10-2\\sqrt{5}}-2\\right)}{8}", "\\frac{\\sqrt{2}\\left(\\sqrt{5}-\\sqrt{3}\\right)\\left(\\sqrt{5+2\\sqrt{5}}-2+\\sqrt{3}\\right)}{2}"],
-    ["\\frac{\\pi}{30}", "6^\\circ", "\\frac{\\sqrt{30-6\\sqrt{5}}-\\sqrt{5}-1}{8}", "\\frac{\\sqrt{10-2\\sqrt{5}}-\\sqrt{15}+\\sqrt{3}}{2}", "-\\sqrt{5-2\\sqrt{5}}+\\sqrt{3}"],
-    ["\\frac{\\pi}{24}", "7.5^\\circ", "\\frac{\\sqrt{8-2\\sqrt{6}-2\\sqrt{2}}}{4}", "\\left(\\sqrt{3}-\\sqrt{2}\\right)\\left(\\sqrt{2}-1\\right)", "\\left(\\sqrt{3}+1\\right)\\sqrt{4-\\sqrt{6}-\\sqrt{2}}"],
-    ["\\frac{\\pi}{20}", "9^\\circ", "\\frac{-2\\sqrt{5-\\sqrt{5}}+\\sqrt{10}+\\sqrt{2}}{8}", "-\\sqrt{5+2\\sqrt{5}}+\\sqrt{5}+1", "\\frac{-2\\sqrt{5+\\sqrt{5}}+3\\sqrt{2}+\\sqrt{10}}{2}"],
-    ["\\frac{\\pi}{15}", "12^\\circ", "\\frac{\\sqrt{10+2\\sqrt{5}}-\\sqrt{15}+\\sqrt{3}}{8}", "\\frac{\\left(3-\\sqrt{5}\\right)\\left(-\\sqrt{10-2\\sqrt{5}}+2\\sqrt{3}\\right)}{4}", "\\sqrt{15-6\\sqrt{5}}-\\sqrt{5}+2"],
-    ["\\frac{\\pi}{12}", "15^\\circ", "\\frac{\\sqrt{6}-\\sqrt{2}}{4}", "2-\\sqrt{3}", "\\sqrt{6}-\\sqrt{2}"],
-    ["\\frac{\\pi}{10}", "18^\\circ", "\\frac{\\sqrt{5}-1}{4}", "\\frac{\\sqrt{25-10\\sqrt{5}}}{5}", "\\frac{\\sqrt{50-10\\sqrt{5}}}{5}"],
-    ["\\frac{7\\pi}{60}", "21^\\circ", "\\frac{-\\sqrt{2}\\left(\\sqrt{3}-1\\right)\\left(\\sqrt{5}+1\\right)+2\\left(\\sqrt{3}+1\\right)\\sqrt{5-\\sqrt{5}}}{16}", "\\frac{\\left(\\sqrt{3}+1\\right)\\left(\\sqrt{5}-1\\right)\\left(\\sqrt{5}-\\sqrt{3}\\right)\\left(\\sqrt{10+2\\sqrt{5}}-2\\right)}{8}", "\\frac{\\sqrt{2}\\left(\\sqrt{5}-\\sqrt{3}\\right)\\left(-\\sqrt{5-2\\sqrt{5}}+2+\\sqrt{3}\\right)}{2}"],
-    ["\\frac{\\pi}{8}", "22.5^\\circ", "\\frac{\\sqrt{2-\\sqrt{2}}}{2}", "\\sqrt{2}-1", "\\sqrt{4-2\\sqrt{2}}"],
-    ["\\frac{2\\pi}{15}", "24^\\circ", "\\frac{-\\sqrt{10-2\\sqrt{5}}+\\sqrt{15}+\\sqrt{3}}{8}", "\\frac{\\left(3+\\sqrt{5}\\right)\\left(\\sqrt{10+2\\sqrt{5}}-2\\sqrt{3}\\right)}{4}", "\\sqrt{15+6\\sqrt{5}}-\\sqrt{5}-2"],
-    ["\\frac{3\\pi}{20}", "27^\\circ", "\\frac{2\\sqrt{5+\\sqrt{5}}-\\sqrt{10}+\\sqrt{2}}{8}", "-\\sqrt{5+2\\sqrt{5}}+\\sqrt{5}-1", "\\frac{2\\sqrt{5-\\sqrt{5}}-3\\sqrt{2}+\\sqrt{10}}{2}"],
-    ["\\frac{\\pi}{6}", "30^\\circ", "\\frac{1}{2}", "\\frac{\\sqrt{3}}{3}", "\\frac{2\\sqrt{3}}{3}"],
-    ["\\frac{11\\pi}{60}", "33^\\circ", "\\frac{\\sqrt{2}\\left(\\sqrt{3}+1\\right)\\left(\\sqrt{5}-1\\right)+2\\left(\\sqrt{3}-1\\right)\\sqrt{5+\\sqrt{5}}}{16}", "\\frac{\\left(\\sqrt{3}-1\\right)\\left(\\sqrt{5}+1\\right)\\left(\\sqrt{5}-\\sqrt{3}\\right)\\left(\\sqrt{10-2\\sqrt{5}}+2\\right)}{8}", "\\frac{\\sqrt{2}\\left(\\sqrt{5}-\\sqrt{3}\\right)\\left(\\sqrt{5+2\\sqrt{5}}+2-\\sqrt{3}\\right)}{2}"],
-    ["\\frac{\\pi}{5}", "36^\\circ", "\\frac{\\sqrt{10-2\\sqrt{5}}}{4}", "\\sqrt{5-2\\sqrt{5}}", "\\sqrt{5}-1"],
-    ["\\frac{5\\pi}{24}", "37.5^\\circ", "\\frac{\\sqrt{8-2\\sqrt{6}+2\\sqrt{2}}}{4}", "\\left(\\sqrt{3}-\\sqrt{2}\\right)\\left(\\sqrt{2}+1\\right)", "\\left(\\sqrt{3}-1\\right)\\sqrt{4-\\sqrt{6}+\\sqrt{2}}"],
-    ["\\frac{13\\pi}{60}", "39^\\circ", "\\frac{\\sqrt{2}\\left(\\sqrt{3}+1\\right)\\left(\\sqrt{5}+1\\right)-2\\left(\\sqrt{3}-1\\right)\\sqrt{5-\\sqrt{5}}}{16}", "\\frac{\\left(\\sqrt{3}-1\\right)\\left(\\sqrt{5}-1\\right)\\left(\\sqrt{5}+\\sqrt{3}\\right)\\left(\\sqrt{10+2\\sqrt{5}}-2\\right)}{8}", "\\frac{\\sqrt{2}\\left(\\sqrt{5}+\\sqrt{3}\\right)\\left(\\sqrt{5-2\\sqrt{5}}-2+\\sqrt{3}\\right)}{2}"],
-    ["\\frac{7\\pi}{30}", "42^\\circ", "\\frac{\\sqrt{30+6\\sqrt{5}}-\\sqrt{5}+1}{8}", "\\frac{-\\sqrt{10+2\\sqrt{5}}+\\sqrt{15}+\\sqrt{3}}{2}", "\\sqrt{5+2\\sqrt{5}}-\\sqrt{3}"],
-    ["\\frac{\\pi}{4}", "45^\\circ", "\\frac{\\sqrt{2}}{2}", "1", "\\sqrt{2}"],
-    ["\\frac{4\\pi}{15}", "48^\\circ", "\\frac{\\sqrt{10+2\\sqrt{5}}+\\sqrt{15}-\\sqrt{3}}{8}", "\\frac{\\left(3-\\sqrt{5}\\right)\\left(\\sqrt{10-2\\sqrt{5}}+2\\sqrt{3}\\right)}{4}", "\\sqrt{15-6\\sqrt{5}}+\\sqrt{5}-2"],
-    ["\\frac{17\\pi}{60}", "51^\\circ", "\\frac{\\sqrt{2}\\left(\\sqrt{3}-1\\right)\\left(\\sqrt{5}+1\\right)+2\\left(\\sqrt{3}+1\\right)\\sqrt{5-\\sqrt{5}}}{16}", "\\frac{\\left(\\sqrt{3}+1\\right)\\left(\\sqrt{5}-1\\right)\\left(\\sqrt{5}-\\sqrt{3}\\right)\\left(\\sqrt{10+2\\sqrt{5}}+2\\right)}{8}", "\\frac{\\sqrt{2}\\left(\\sqrt{5}-\\sqrt{3}\\right)\\left(\\sqrt{5-2\\sqrt{5}}+2+\\sqrt{3}\\right)}{2}"],
-    ["\\frac{7\\pi}{24}", "52.5^\\circ", "\\frac{\\sqrt{8+2\\sqrt{6}-2\\sqrt{2}}}{4}", "\\left(\\sqrt{3}+\\sqrt{2}\\right)\\left(\\sqrt{2}-1\\right)", "\\left(\\sqrt{3}-1\\right)\\sqrt{4+\\sqrt{6}-\\sqrt{2}}"],
-    ["\\frac{3\\pi}{10}", "54^\\circ", "\\frac{\\sqrt{5}+1}{4}", "\\frac{\\sqrt{25+10\\sqrt{5}}}{5}", "\\frac{\\sqrt{50+10\\sqrt{5}}}{5}"],
-    ["\\frac{19\\pi}{60}", "57^\\circ", "\\frac{-\\sqrt{2}\\left(\\sqrt{3}-1\\right)\\left(\\sqrt{5}-1\\right)+2\\left(\\sqrt{3}+1\\right)\\sqrt{5+\\sqrt{5}}}{16}", "\\frac{\\left(\\sqrt{3}+1\\right)\\left(\\sqrt{5}+1\\right)\\left(\\sqrt{5}+\\sqrt{3}\\right)\\left(\\sqrt{10-2\\sqrt{5}}-2\\right)}{8}", "\\frac{\\sqrt{2}\\left(\\sqrt{5}+\\sqrt{3}\\right)\\left(-\\sqrt{5+2\\sqrt{5}}+2+\\sqrt{3}\\right)}{2}"],
-    ["\\frac{\\pi}{3}", "60^\\circ", "\\frac{\\sqrt{3}}{2}", "\\sqrt{3}", "2"],
-    ["\\frac{7\\pi}{20}", "63^\\circ", "\\frac{2\\sqrt{5+\\sqrt{5}}+\\sqrt{10}-\\sqrt{2}}{8}", "\\sqrt{5+2\\sqrt{5}}+\\sqrt{5}-1", "\\frac{2\\sqrt{5-\\sqrt{5}}+3\\sqrt{2}-\\sqrt{10}}{2}"],
-    ["\\frac{11\\pi}{30}", "66^\\circ", "\\frac{\\sqrt{30-6\\sqrt{5}}+\\sqrt{5}+1}{8}", "\\frac{\\sqrt{10-2\\sqrt{5}}+\\sqrt{15}-\\sqrt{3}}{2}", "\\sqrt{5-2\\sqrt{5}}+\\sqrt{3}"],
-    ["\\frac{3\\pi}{8}", "67.5^\\circ", "\\frac{\\sqrt{2+\\sqrt{2}}}{2}", "\\sqrt{2}+1", "\\sqrt{4+2\\sqrt{2}}"],
-    ["\\frac{23\\pi}{60}", "69^\\circ", "\\frac{\\sqrt{2}\\left(\\sqrt{3}+1\\right)\\left(\\sqrt{5}+1\\right)+2\\left(\\sqrt{3}-1\\right)\\sqrt{5-\\sqrt{5}}}{16}", "\\frac{\\left(\\sqrt{3}-1\\right)\\left(\\sqrt{5}-1\\right)\\left(\\sqrt{5}+\\sqrt{3}\\right)\\left(\\sqrt{10+2\\sqrt{5}}+2\\right)}{8}", "\\frac{\\sqrt{2}\\left(\\sqrt{5}+\\sqrt{3}\\right)\\left(\\sqrt{5-2\\sqrt{5}}+2-\\sqrt{3}\\right)}{2}"],
-    ["\\frac{2\\pi}{5}", "72^\\circ", "\\frac{\\sqrt{10+2\\sqrt{5}}}{4}", "\\sqrt{5+2\\sqrt{5}}", "\\sqrt{5}+1"],
-    ["\\frac{5\\pi}{12}", "75^\\circ", "\\frac{\\sqrt{6}+\\sqrt{2}}{4}", "2+\\sqrt{3}", "\\sqrt{6}+\\sqrt{2}"],
-    ["\\frac{13\\pi}{30}", "78^\\circ", "\\frac{\\sqrt{30+6\\sqrt{5}}+\\sqrt{5}-1}{8}", "\\frac{\\sqrt{10+2\\sqrt{5}}+\\sqrt{15}+\\sqrt{3}}{2}", "\\sqrt{5+2\\sqrt{5}}+\\sqrt{3}"],
-    ["\\frac{9\\pi}{20}", "81^\\circ", "\\frac{2\\sqrt{5-\\sqrt{5}}+\\sqrt{10}+\\sqrt{2}}{8}", "\\sqrt{5+2\\sqrt{5}}+\\sqrt{5}+1", "\\frac{2\\sqrt{5+\\sqrt{5}}+3\\sqrt{2}+\\sqrt{10}}{2}"],
-    ["\\frac{11\\pi}{24}", "82.5^\\circ", "\\frac{\\sqrt{8+2\\sqrt{6}+2\\sqrt{2}}}{4}", "\\left(\\sqrt{3}+\\sqrt{2}\\right)\\left(\\sqrt{2}+1\\right)", "\\left(\\sqrt{3}+1\\right)\\sqrt{4+\\sqrt{6}+\\sqrt{2}}"],
-    ["\\frac{7\\pi}{15}", "84^\\circ", "\\frac{\\sqrt{10-2\\sqrt{5}}+\\sqrt{15}+\\sqrt{3}}{8}", "\\frac{\\left(3+\\sqrt{5}\\right)\\left(\\sqrt{10+2\\sqrt{5}}+2\\sqrt{3}\\right)}{4}", "\\sqrt{15+6\\sqrt{5}}+\\sqrt{5}+2"],
-    ["\\frac{29\\pi}{60}", "87^\\circ", "\\frac{\\sqrt{2}\\left(\\sqrt{3}-1\\right)\\left(\\sqrt{5}-1\\right)+2\\left(\\sqrt{3}+1\\right)\\sqrt{5+\\sqrt{5}}}{16}", "\\frac{\\left(\\sqrt{3}+1\\right)\\left(\\sqrt{5}+1\\right)\\left(\\sqrt{5}+\\sqrt{3}\\right)\\left(\\sqrt{10-2\\sqrt{5}}+2\\right)}{8}", "\\frac{\\sqrt{2}\\left(\\sqrt{5}+\\sqrt{3}\\right)\\left(\\sqrt{5+2\\sqrt{5}}+2+\\sqrt{3}\\right)}{2}"],
-    ["\\frac{\\pi}{2}", "90^\\circ", "1", "", ""]
-];
-window.onload = function() {
-    var tbody = document.querySelector("table#sin tbody");
-    table.forEach(row => {
-        var tr = document.createElement("tr");
-        row.forEach(cell => tr.innerHTML += `<td><img src="https://www.zhihu.com/equation?tex=${encodeURIComponent(cell)}" /></td>`);
-        tbody.appendChild(tr);
-    });
-}
-        </script>
     </head>
     <body>
-        <p>Je pense, donc je suis. - René Descartes</p>
-        <div id="links">
-            <p><a href="art/b1.html" target="_blank">art/B1</a></p>
-            <p><a href="art/b3.html" target="_blank">art/B3</a></p>
-            <p><a href="art/b20.html" target="_blank">art/B20</a></p>
-            <p><a href="art/b120.html" target="_blank">art/B120</a></p>
-            <p><a href="art/balls.html" target="_blank">art/Balls</a></p>
-            <p><a href="art/flicker.html" target="_blank">art/Flicker</a></p>
-            <p><a href="art/nothing.html" target="_blank">art/Nothing</a></p>
-            <!--<p><a href="t/" target="_blank">Tetr.js+</a></p>-->
-            <p><a href="calculator.html" target="_blank">Calculator</a></p>
-            <p><a href="keyboard.html" target="_blank">Keyboard</a></p>
-            <p><a href="time.html" target="_blank">Time</a></p>
-        </div>
-        <div id="maths">
-            <img src="https://www.zhihu.com/equation?tex=e%5E%7Bi%5Cpi%7D%2B1%3D0" />
-            <img src="https://www.zhihu.com/equation?tex=%5Cfrac%7B1%7D%7B%5Cpi%7D%20%3D%20%5Cfrac%7B2%5Csqrt%7B2%7D%7D%7B9801%7D%5Csum_%7Bk%3D0%7D%5E%5Cinfty%5Cfrac%7B(4k)!(1103%2B26390k)%7D%7B(k!)%5E4396%5E%7B4k%7D%7D" />
-            <table id="sin">
-                <thead>
-                    <tr>
-                        <td colspan="2"><img src="https://www.zhihu.com/equation?tex=%5Calpha" /></td>
-                        <td><img src="https://www.zhihu.com/equation?tex=%5Csin%5Calpha" /></td>
-                        <td><img src="https://www.zhihu.com/equation?tex=%5Ctan%5Calpha" /></td>
-                        <td><img src="https://www.zhihu.com/equation?tex=%5Csec%5Calpha" /></td>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </div>
+        <pre>Je pense, donc je suis. - René Descartes
+
+<a href="rickroll.html" target="_blank">???</a>
+Snow Screen (<a href="art/snow.html?a=1" target="_blank">1</a>|<a href="art/snow.html?a=3" target="_blank">3</a>|<a href="art/snow.html?a=20" target="_blank">20</a>|<a href="art/snow.html?a=120" target="_blank">120</a>)
+<a href="art/balls.html" target="_blank">Balls</a>
+<a href="art/flicker.html" target="_blank">Flicker</a> (光敏性癫痫警告 photosensitive epilepsy warning)
+<a href="art/nothing.html" target="_blank">Nothing</a>
+<a href="calculator.html" target="_blank">计算器 Calculator</a>
+<a href="keyboard.html" target="_blank">键盘 Keyboard</a>
+<a href="sin.html" target="_blank">不常用三角函数值表</a>
+<a href="time.html" target="_blank">时钟 Time</a>
+
+<a href="https://github.com/lime4673" target="_blank">Github</a> | <a href="https://space.bilibili.com/1129568109" target="_blank">Bilibili</a>
+<a href="https://tetr.io/" target="_blank">TETR.IO</a> | <a href="https://jstris.jezevec10.com/" target="_blank">Jstris</a> | <a href="http://farter.cn/t/" target="_blank">Tetr.js</a> | <a href="https://www.studio26f.org/home" target="_blank">Techmino</a>
+<a href="https://docs.qq.com/doc/p/258cf511834e703764d62c2dbeb1f00e3eb2a0e5" target="_blank">俄罗斯方块中文导航</a> | <a href="https://tetris.huijiwiki.com/wiki/首页" target="_blank">俄罗斯方块中文维基</a> | <a href="https://harddrop.com/wiki/Tetris_Wiki" target="_blank">Hard Drop (Wiki)</a> | <a href="https://tetris.wiki/" target="_blank">Tetris.wiki</a> | <a href="https://teatube.cn/" target="_blank">Teatube</a></pre>
     </body>
 </html>

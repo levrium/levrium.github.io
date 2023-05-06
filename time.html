@@ -3,12 +3,12 @@
     <head>
         <meta charset="utf-8">
         <title>Time</title>
-        <link href="style.css" type="text/css" rel="stylesheet" />
         <style type="text/css">
 html, body {
     width: 100%;
     height: 100%;
-    font-weight: 100;
+    background-color: #000000;
+    font: 100 24px "Helvetica Neue", Helvetica, Arial, sans-serif;
     user-select: none;
 }
 body {
@@ -80,6 +80,7 @@ body {
     transform-origin: center 243px;
 }
 #datetime p {
+    margin: 0px;
     color: #C0C0C0;
     font-weight: normal;
     text-align: center;
@@ -92,13 +93,7 @@ body {
 }
         </style>
         <script type="text/javascript">
-function fill(n, length) {
-    n = String(n);
-    while (n.length < length) {
-        n = "0" + n;
-    }
-    return n;
-}
+var pad2 = n => String(n).padStart(2, "0");
 function time() {
     var lineHour = document.querySelector("#lines .hour");
     var lineMin = document.querySelector("#lines .min");
@@ -120,8 +115,8 @@ function time() {
     lineHour.style.transform = dotHour.style.transform = `rotate(${secToday / 120}deg)`;
     lineMin.style.transform = dotMin.style.transform = `rotate(${secToday / 10}deg)`;
     lineSec.style.transform = dotSec.style.transform = `rotate(${secToday * 6}deg)`;
-    textDate.innerText = `${year} - ${fill(month, 2)} - ${fill(day, 2)}`;
-    textTime.innerText = `${fill(hour, 2)} : ${fill(min, 2)} : ${fill(sec, 2)}`;
+    textDate.innerText = `${year} - ${pad2(month)} - ${pad2(day)}`;
+    textTime.innerText = `${pad2(hour)} : ${pad2(min)} : ${pad2(sec)}`;
 }
 function setTitle() {
     var title = document.querySelector("title");
@@ -131,13 +126,13 @@ function setTitle() {
     var day = date.getDate();
     var hour = date.getHours();
     var min = date.getMinutes();
-    title.innerText = `${year}-${fill(month, 2)}-${fill(day, 2)} ${fill(hour, 2)}:${fill(min, 2)}`;
+    title.innerText = `${year}-${pad2(month)}-${pad2(day)} ${pad2(hour)}:${pad2(min)}`;
 }
-window.onload = function() {
+window.onload = () => {
     setTitle();
     setInterval(time, 10);
     setInterval(setTitle, 100);
-}
+};
         </script>
     </head>
     <body>

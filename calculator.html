@@ -564,7 +564,13 @@ window.onload = () => {
     var monadicEquation = new MonadicEquation();
     var linearEquation = new LinearEquation();
 };
+
+MathJax = {
+    tex: {inlineMath: [["$", "$"]], displayMath: [["$$", "$$"]]},
+    options: {enableMenu: false}
+};
         </script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
     </head>
     <body>
         <section id="factorization">
@@ -593,14 +599,14 @@ window.onload = () => {
         </section>
         <section id="monadic-equation">
             <header>解一元n次方程</header>
-            <img src="https://www.zhihu.com/equation?tex=a_1x%5En%2Ba_2x%5E%7Bn-1%7D%2B%5Ccdots%2Ba_%7Bn-1%7Dx%5E2%2Ba_nx%2Ba_%7Bn%2B1%7D%3D0%5Cspace(n%5Cin%5Cleft%5C%7B1%2C2%2C3%2C4%5Cright%5C%7D)" />
+            <p>$a_1x^n+a_2x^{n-1}+\cdots+a_{n-1}x^2+a_nx+a_{n+1}=0\space(n\in\left\{1,2,3,4\right\})$</p>
             <p>请输入方程一般形式的各参数，以空格分隔。 <input type="button" value="确定" /></p>
             <input type="text" placeholder="示例：8 0 -6 1" value="" />
             <textarea readonly></textarea>
         </section>
         <section id="linear-equation">
             <header>解n元一次方程组</header>
-            <img src="https://www.zhihu.com/equation?tex=a_1x_1%2Ba_2x_2%2B%5Ccdots%2Ba_%7Bn-1%7Dx_%7Bn-1%7D%2Ba_nx_n%2Ba_%7Bn%2B1%7D%3D0%5Cspace(n%5Cin%5Cmathbb%7BN%7D_%2B)" />
+            <p>$a_1x_1+a_2x_2+\cdots+a_{n-1}x_{n-1}+a_nx_n+a_{n+1}=0\space(n\in\mathbb{N}_+)$</p>
             <p>请输入方程一般形式的各参数，方程间以换行分隔，参数间以空格分隔。 <input type="button" value="确定" /></p>
             <textarea placeholder="示例：&#10;1 1 1 -6&#10;1 2 3 -14&#10;1 -1 1 -2"></textarea>
             <textarea readonly></textarea>
