@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>计算器</title>
+        <link href="style.css" type="text/css" rel="stylesheet" />
+    </head>
+    <body>
+        <nav>
+            <a name="factorization">分解质因数</a>
+            <a name="base-conversion">进制转换</a>
+            <a name="monadic-equation">解一元方程</a>
+            <a name="linear-equation">解一次方程组</a>
+            <a name="base64">base64</a>
+        </nav>
+        <section id="factorization">
+            <header>分解质因数</header>
+            <p>
+                <input type="text" value="" style="width: 50%; text-align: right;" />
+                <input type="button" value="分解" />
+                &nbsp; <span style="display: none;"></span>
+            </p>
+            <p><input type="text" readonly value="" /></p>
+        </section>
+        <section id="base-conversion">
+            <header>进制转换</header>
+            <p>
+                <input class="base" type="number" min="2" max="256" step="1" value="10" /> 进制 &nbsp; &nbsp;
+                <input class="number" type="text" value="0" /> &nbsp; &nbsp;
+                序列：<input class="sequence" type="text" maxlength="256" value="0123456789" />
+            </p>
+            <p>转为 &nbsp; <input id="swap" type="button" value="&uarr;&darr;" /></p>
+            <p>
+                <input class="base" type="number" min="2" max="256" step="1" value="16" /> 进制 &nbsp; &nbsp;
+                <input class="number" type="text" value="0" readonly /> &nbsp; &nbsp;
+                序列：<input class="sequence" type="text" maxlength="256" value="0123456789ABCDEF" />
+            </p>
+            <p class="error" style="color: #FF0000;"></p>
+        </section>
+        <section id="monadic-equation">
+            <header>解一元方程</header>
+            <p>$a_1x^n + a_2x^{n - 1} + \cdots + a_{n - 1}x^2 + a_nx + a_{n + 1} = 0 \space \left( n \in \left\{ 1, 2, 3, 4 \right\} \right)$</p>
+            <p>请输入方程一般形式的各参数，以空格分隔。 <input type="button" value="确定" /></p>
+            <input type="text" placeholder="示例：8 0 -6 1" value="" />
+            <textarea readonly></textarea>
+        </section>
+        <section id="linear-equation">
+            <header>解一次方程组</header>
+            <p>$a_1x_1 + a_2x_2 + \cdots + a_{n - 1}x_{n - 1} + a_nx_n + a_{n + 1} = 0 \space \left( n \in \mathbb{N}_+ \right)$</p>
+            <p>请输入方程一般形式的各参数，方程间以换行分隔，参数间以空格分隔。 <input type="button" value="确定" /></p>
+            <textarea placeholder="示例：&#10;1 1 1 -6&#10;1 2 3 -14&#10;1 -1 1 -2"></textarea>
+            <textarea readonly></textarea>
+        </section>
+        <section id="base64">
+            <header>base64</header>
+        </section>
+        <script type="text/javascript" src="factorization.js"></script>
+        <script type="text/javascript" src="base_conversion.js"></script>
+        <script type="text/javascript" src="equation.js"></script>
+        <script type="text/javascript">
+let factorization = new Factorization();
+let baseConversion = new BaseConversion();
+let monadicEquation = new MonadicEquation();
+let linearEquation = new LinearEquation();
+
+let nav = document.querySelectorAll("nav a");
+for (let i of nav) {
+    let sections = document.querySelectorAll("section");
+    i.onclick = () => {
+        let id = i.name;
+        for (let section of sections) {
+            section.style.display = "none";
+        }
+        for (let a of nav) {
+            a.classList.remove("selected");
+            a.style.cursor = "pointer";
+        }
+        document.querySelector("section#" + id).style.display = "block";
+        i.classList.add("selected");
+        i.style.cursor = "default";
+    };
+    
+}
+nav[0].click();
+
+MathJax = {
+    tex: {inlineMath: [["$", "$"]], displayMath: [["$$", "$$"]]},
+    options: {enableMenu: false}
+};
+        </script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    </body>
+</html>
