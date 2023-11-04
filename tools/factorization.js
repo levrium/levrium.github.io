@@ -1,6 +1,6 @@
 class Factorization {
     constructor() {
-        var button = document.querySelector('#factorization input[type="button"]');
+        var button = document.querySelector("#factorization button");
         var input = document.querySelector('#factorization input[type="text"]');
         button.onclick = () => {
             if (input.value === "") {
@@ -13,7 +13,7 @@ class Factorization {
                 }
                 this.factorize(n);
             }
-            catch {
+            catch (e) {
                 alert("无效的数字");
             }
         };
@@ -74,9 +74,9 @@ class Factorization {
             }
             return [factors, 1n, limit, limit];
         }
-        var button = document.querySelector('#factorization input[type="button"]');
+        var button = document.querySelector("#factorization button");
         var output = document.querySelectorAll('#factorization input[type="text"]')[1];
-        var textProgress = document.querySelector("#factorization span");
+        var textProgress = document.querySelector("#factorization p:last-child");
         button.disabled = "true";
         textProgress.style.display = "inline";
         var calc = Calc(n);

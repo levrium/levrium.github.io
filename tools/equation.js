@@ -1,7 +1,7 @@
 class MonadicEquation {
     constructor() {
-        var button = document.querySelector("#monadic-equation input");
-        var input = document.querySelectorAll("#monadic-equation input")[1];
+        var button = document.querySelector("#monadic-equation button");
+        var input = document.querySelector("#monadic-equation input");
         var output = document.querySelector("#monadic-equation textarea");
         button.onclick = () => {
             if (input.value === "") {
@@ -173,9 +173,8 @@ class MonadicEquation {
 
 class LinearEquation {
     constructor() {
-        var button = document.querySelector("#linear-equation input");
-        var input = document.querySelector("#linear-equation textarea");
-        var output = document.querySelectorAll("#linear-equation textarea")[1];
+        var button = document.querySelector("#linear-equation button");
+        var [input, output] = document.querySelectorAll("#linear-equation textarea");
         button.onclick = () => {
             if (input.value === "") {
                 return;

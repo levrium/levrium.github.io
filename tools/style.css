@@ -1,6 +1,35 @@
+@font-face {
+    font-family: "Noto Sans";
+    font-weight: normal;
+    font-style: normal;
+    src: local("Noto Sans"), url(/res/NotoSans-Regular.woff2);
+    font-display: swap;
+}
+@font-face {
+    font-family: "Noto Sans";
+    font-weight: normal;
+    font-style: italic;
+    src: local("Noto Sans"), url(/res/NotoSans-Italic.woff2);
+    font-display: swap;
+}
+@font-face {
+    font-family: "Noto Sans";
+    font-weight: bold;
+    font-style: normal;
+    src: local("Noto Sans"), url(/res/NotoSans-Bold.woff2);
+    font-display: swap;
+}
+@font-face {
+    font-family: "Noto Sans";
+    font-weight: bold;
+    font-style: italic;
+    src: local("Noto Sans"), url(/res/NotoSans-BoldItalic.woff2);
+    font-display: swap;
+}
 html, body {
     margin: 0px;
-    font: 20px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font: 20px "Noto Sans", sans-serif;
+    word-wrap: break-word;
 }
 nav {
     width: 100%;
@@ -10,6 +39,7 @@ nav {
     top: 0px;
     left: 0px;
     background-color: #F0F0F0;
+    box-sizing: border-box;
 }
 nav a {
     margin: 0em 0.5em;
@@ -25,53 +55,62 @@ section {
 }
 header {
     font-size: 32px;
-    line-height: 48px;
+    line-height: 1.5em;
     font-weight: bold;
 }
-input {
-    padding: 2px 3px;
+input, button {
+    min-width: 1.5em;
+    padding: 2.5px 5px;
     border: 2px solid #B0B0B0;
     border-radius: 4px;
-    font-size: 18px;
+    font-size: 20px;
 }
-input[type="button"] {
+input {
+    font-family: Consolas, sans-serif;
+}
+button {
     background-color: #EFEFEF;
 }
-input[type="button"]:hover {
+button:hover {
     background-color: #FFFFFF;
 }
 textarea {
-    width: 75%;
+    width: calc(100% - 14px);
     height: 5em;
-    padding: 4px;
+    padding: 2.5px 5px;
     border: 2px solid #B0B0B0;
     border-radius: 4px;
     margin: 8px 0px;
     display: block;
-    font-family: Arial, sans-serif;
-    font-size: 18px;
+    font: 1em Consolas, sans-serif;
 }
-#factorization input[type="text"] {
-    width: 75%;
+#factorization header + p input {
+    width: calc(100% - 2.5em - 30px);
+    max-width: 800px;
+    text-align: right;
+}
+#factorization input[readonly] {
+    width: calc(100% - 14px);
 }
 #base-conversion .base {
-    width: 60px;
+    width: 3em;
     text-align: right;
 }
 #base-conversion .number {
-    width: 30%;
+    width: calc(100% - 7em - 28px);
+    max-width: 800px;
     text-align: right;
 }
 #base-conversion .sequence {
-    width: 45%;
-    font-size: 14px;
+    width: calc(100% - 3em - 14px);
+    max-width: 1200px;
     line-height: 21px;
 }
 #swap {
     width: 40px;
 }
 #monadic-equation input[type="text"] {
-    width: 75%;
+    width: calc(100% - 14px);
     margin: 8px 0px;
     display: block;
 }
@@ -85,4 +124,7 @@ a:hover {
 }
 a.selected {
     color: #000000;
+}
+code, .monospace {
+    font-family: Consolas, sans-serif;
 }

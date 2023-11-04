@@ -2,44 +2,171 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Λεμόνι</title>
+        <title>limouvre.github.io</title>
         <style type="text/css">
-html, body, pre {
-    color: #FFFFFF;
-    background-color: #000000;
-    font: 24px Consolas, "Courier New", "微软雅黑", sans-serif;
+@font-face {
+    font-family: "Noto Sans";
+    font-weight: normal;
+    font-style: normal;
+    src: local("Noto Sans"), url(res/NotoSans-Regular.woff2);
+    font-display: swap;
 }
-pre {
+@font-face {
+    font-family: "Noto Sans";
+    font-weight: normal;
+    font-style: italic;
+    src: local("Noto Sans"), url(res/NotoSans-Italic.woff2);
+    font-display: swap;
+}
+@font-face {
+    font-family: "Noto Sans";
+    font-weight: bold;
+    font-style: normal;
+    src: local("Noto Sans"), url(res/NotoSans-Bold.woff2);
+    font-display: swap;
+}
+@font-face {
+    font-family: "Noto Sans";
+    font-weight: bold;
+    font-style: italic;
+    src: local("Noto Sans"), url(res/NotoSans-BoldItalic.woff2);
+    font-display: swap;
+}
+html {
+    background-color: #EFEFEF;
+    font: 20px "Noto Sans", sans-serif;
+}
+body {
+    max-width: 1200px;
+    min-height: 100vh;
+    padding: 16px;
+    margin: 0px auto;
+    background-color: #FFFFFF;
+    box-sizing: border-box;
+}
+header p {
     margin: 0px;
-    line-height: 1.25em;
+    font: 1.5em Garamond, "Times New Roman", serif;
+    text-align: center;
 }
-a:link, a:visited {
-    color: #FFFFFF;
-    text-decoration: underline;
+footer p {
+    margin: 0px;
+    font: 1.1em Garamond, "Times New Roman", serif;
 }
-a:hover, a:active {
-    color: #E0E0E0;
-    text-decoration: underline;
+ul, li {
+    padding: 0px;
+    list-style: none;
+}
+a {
+    color: #3498DB;
+    text-decoration: none;
+}
+a:hover {
+    color: #0056B3;
 }
         </style>
     </head>
     <body>
-        <pre>Je pense, donc je suis. - René Descartes
-
-<a href="rickroll.html" target="_blank">???</a>
-Snow Screen (<a href="art/snow.html?a=1" target="_blank">1</a>|<a href="art/snow.html?a=3" target="_blank">3</a>|<a href="art/snow.html?a=20" target="_blank">20</a>|<a href="art/snow.html?a=120" target="_blank">120</a>)
-<a href="art/balls.html" target="_blank">Balls</a>
-<a href="art/flicker.html" target="_blank">Flicker</a> (光敏性癫痫警告 photosensitive epilepsy warning)
-<a href="art/nothing.html" target="_blank">Nothing</a>
-<a href="tools/" target="_blank">工具 Tools</a>
-<a href="keyboard.html" target="_blank">键盘 Keyboard</a>
-<a href="sin.html" target="_blank">不常用三角函数值表</a>
-<a href="time.html" target="_blank">时钟 Time</a>
-
-<a href="https://github.com/lime4673" target="_blank">Github</a> | <a href="https://space.bilibili.com/1129568109" target="_blank">Bilibili</a>
-<a href="https://tetr.io/" target="_blank">TETR.IO</a> | <a href="https://jstris.jezevec10.com/" target="_blank">Jstris</a> | <a href="http://farter.cn/t/" target="_blank">Tetr.js</a> | <a href="https://www.studio26f.org/home" target="_blank">Techmino</a>
-<a href="https://docs.qq.com/doc/p/258cf511834e703764d62c2dbeb1f00e3eb2a0e5" target="_blank">俄罗斯方块中文导航</a> | <a href="https://tetris.huijiwiki.com/wiki/首页" target="_blank">俄罗斯方块中文维基</a> | <a href="https://harddrop.com/wiki/Tetris_Wiki" target="_blank">Hard Drop (Wiki)</a> | <a href="https://tetris.wiki/" target="_blank">Tetris.wiki</a> | <a href="https://teatube.cn/" target="_blank">Teatube</a>
-<a href="https://ccbc13.cipherpuzzles.com/" target="_blank">CCBC 13</a> | <a href="https://philippica.github.io/cipher_machine/">焖肉面 - puzzle hunt 工具集</a>
-<a href="https://suulnnka.github.io/BullshitGenerator/" target="_blank">狗屁不通文章生成器</a> | <a href="https://theuselessweb.com/" target="_blank">The Useless Web</a></pre>
+        <header>
+            <p>Je pense, donc je suis. - René Descartes</p>
+        </header>
+        <ul>
+            <li><a href="rickroll.html">???</a></li>
+            <li>Snow Screen (<a href="art/snow.html?a=1">1</a>|<a href="art/snow.html?a=3">3</a>|<a href="art/snow.html?a=20">20</a>|<a href="art/snow.html?a=120">120</a>)
+            <li><a href="art/balls.html">Balls</a></li>
+            <li><a href="art/flicker.html">Flicker</a> (光敏性癫痫警告 photosensitive epilepsy warning)</li>
+            <li><a href="art/nothing.html">Nothing</a></li>
+            <li><a href="tools/">工具 Tools</a></li>
+            <li><a href="keyboard.html">键盘 Keyboard</a></li>
+            <li><a href="sin.html"><del>不常用</del>三角函数值表 Trigonometric Function Value Table</a></li>
+            <li><a href="time.html">时钟 Time</a></li>
+        </ul>
+        <ul>
+            <li><a href="https://github.com/limouvre">Github</a></li>
+            <li><a href="https://space.bilibili.com/1129568109">Bilibili</a></li>
+            <li><a href="https://www.zhihu.com/people/65-69-94-87">知乎</a></li>
+        </ul>
+        <ul>
+            <li><a href="https://www.jcinfo.net/zh-hans/tools/kana">标注日文假名工具</a></li>
+            <li><a href="https://www.fourmilab.ch/documents/calendar/">Calendar Converter</a></li>
+            <li><a href="https://unbug.github.io/codelf/">CODELF</a></li>
+            <li><a href="https://www.ofoct.com/audio-converter/convert-wav-or-mp3-ogg-aac-wma-to-midi.html">Convert WAV (or MP3, OGG, AAC, WMA) to MIDI</a></li>
+            <li><a href="https://www.desmos.com/calculator?lang=zh-CN">Desmos | 图形计算器</a></li>
+            <li><a href="https://csacademy.com/app/diffing_tool/">Diffing Tool</a></li>
+            <li><a href="https://www.geogebra.org/calculator">计算器套件 - GeoGebra</a></li>
+            <li><a href="https://www.geogebra.org/geometry">几何 - GeoGebra</a></li>
+            <li><a href="https://csacademy.com/app/geometry_widget/">Geometry Widget</a></li>
+            <li><a href="https://suulnnka.github.io/BullshitGenerator/">狗屁不通文章生成器</a></li>
+            <li><a href="https://csacademy.com/app/graph_editor/">Graph Editor</a></li>
+            <li><a href="https://cowtransfer.com/">奶牛快传</a></li>
+            <li><a href="https://railmapgen.github.io/">Rail Map Toolkit</a></li>
+            <li><a href="https://regex101.com/">regex101: build, test, and debug regex</a></li>
+            <li><a href="https://www.chunkbase.com/apps/seed-map">Seed Map - Minecraft App</a></li>
+            <li><a href="https://zh.numberempire.com/">数字帝国</a></li>
+            <li><a href="https://piellardj.github.io/stereogram-solver/">Stereogram solver</a></li>
+            <li><a href="https://symbl.cc/cn/">Unicode</a></li>
+            <li><a href="https://www.xiwnn.com/piano">在线钢琴模拟器</a></li>
+            <li><a href="https://www.latexlive.com/">在线 LaTeX 公式编辑器</a></li>
+            <li><a href="https://zh.recompressor.com/">最优图像优化 - Recompressor</a></li>
+        </ul>
+        <ul>
+            <li><a href="https://tetr.io/">TETR.IO</a></li>
+            <li><a href="https://jstris.jezevec10.com/">Jstris</a></li>
+            <li><a href="http://farter.cn/t/">Tetr.js</a></li>
+            <li><a href="https://www.studio26f.org/home">26F Studio</a></li>
+            <li><a href="http://farter.cn/">Farter's homepage</a></li>
+            <li><a href="https://docs.qq.com/doc/p/258cf511834e703764d62c2dbeb1f00e3eb2a0e5">俄罗斯方块中文导航</a></li>
+            <li><a href="https://tetris.huijiwiki.com/wiki/首页">俄罗斯方块中文维基</a></li>
+            <li><a href="https://harddrop.com/wiki/Tetris_Wiki">Hard Drop (Wiki)</a></li>
+            <li><a href="https://tetris.wiki/">Tetris.wiki</a></li>
+            <li><a href="https://teatube.cn/">Teatube</a></li>
+            <li><a href="https://teatube.cn/f/">连续方块谱面（fumen）编辑器</a></li>
+        </ul>
+        <ul>
+            <li><a href="https://ivark.github.io/AntimatterDimensions/">Antimatter Dimensions</a></li>
+            <li><a href="https://eitherchoice.com/">Either Choice</a></li>
+            <li><a href="https://generals.io/">generals.io</a></li>
+            <li><a href="https://wyxkk.gitee.io/the-luogu-tree-zh/">洛谷树</a></li>
+            <li><a href="https://liferestart.syaro.io/public/">人生重开模拟器</a></li>
+            <li><a href="https://ncase.me/trust/">The Evolution of Trust</a></li>
+            <li><a href="https://neal.fun/password-game/">The Password Game</a></li>
+            <li><a href="https://wordlegame.org/">Wordle</a></li>
+            <li><a href="https://dccxi.com/trust/">信任的进化</a></li>
+        </ul>
+        <ul>
+            <li><a href="https://ccbc13.cipherpuzzles.com/">CCBC 13</a></li>
+            <li><a href="https://ccbc14.cipherpuzzles.com/">CCBC 14</a></li>
+            <li><a href="https://archive.cipherpuzzles.com/index.html#/index?c=ccbc11/index">CCBC 11 存档站</a></li>
+            <li><a href="https://archive.cipherpuzzles.com/index.html#/index?c=ccbc12/index">CCBC 12 存档站</a></li>
+            <li><a href="https://philippica.github.io/cipher_machine/">焖肉面 - puzzle hunt 工具集</a></li>
+            <li><a href="https://philippica.github.io/ChinesePuzzleTool/">焖肉面中文版</a></li>
+            <li><a href="https://philippica.github.io/cipher_machine/cipher_sheet">puzzle hunt 常见表</a></li>
+            <li><a href="https://www.quinapalus.com/cgi-bin/qat">Qat</a></li>
+            <li><a href="https://nutrimatic.org/">Nutrimatic</a></li>
+            <li><a href="https://www.quipqiup.com/">quipqiup - cryptoquip and cryptogram solver</a></li>
+            <li><a href="https://www.wordplays.com/crossword-solver/">Crossword Solver</a></li>
+            <li><a href="https://nova.astrometry.net/">Astrometry.net</a></li>
+        </ul>
+        <ul>
+            <li><a href="http://awave2023.com/">A WAVE</a></li>
+            <li><a href="https://esolangs.org/wiki/Main_Page">Esolang</a></li>
+            <li><a href="https://pudding.cool/2017/03/music-history/">How Music Evolved: Billboard's Hot 100, 1958 - 2016</a></li>
+            <li><a href="https://www.internationalphoneticalphabet.org/ipa-sounds/ipa-chart-with-sounds/">IPA Charts with Sounds</a></li>
+            <li><a href="https://conwaylife.com/wiki/Main_Page">LifeWiki</a></li>
+            <li><a href="https://minecraft.wiki/">Minecraft Wiki</a></li>
+            <li><a href="http://murderousmaths.co.uk/">Murderous Maths</a></li>
+            <li><a href="https://www.thomas-yang.me/projects/oh-my-dear-js/">Oh my dear JavaScript</a></li>
+            <li><a href="https://theuselessweb.com/">The Useless Web</a></li>
+            <li><a href="https://www.thiswebsitewillselfdestruct.com/">This website will self destruct</a></li>
+            <li><a href="https://像素点.cn/">小像素点</a></li>
+        </ul>
+        <footer>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </p>
+        </footer>
+        <script type="text/javascript">
+document.querySelectorAll("a").forEach(e => e.target = "_blank");
+        </script>
     </body>
 </html>
