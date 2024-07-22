@@ -66,7 +66,7 @@ input, button {
     font-size: 20px;
 }
 input {
-    font-family: Consolas, sans-serif;
+    font-family: Consolas, "Microsoft YaHei", sans-serif;
 }
 button {
     background-color: #EFEFEF;
@@ -82,7 +82,7 @@ textarea {
     border-radius: 4px;
     margin: 8px 0px;
     display: block;
-    font: 1em Consolas, sans-serif;
+    font: 1em Consolas, "Microsoft YaHei", sans-serif;
 }
 #factorization header + p input {
     width: calc(100% - 2.5em - 30px);
@@ -126,5 +126,5 @@ a.selected {
     color: #000000;
 }
 code, .monospace {
-    font-family: Consolas, sans-serif;
+    font-family: Consolas, "Microsoft YaHei", sans-serif;
 }

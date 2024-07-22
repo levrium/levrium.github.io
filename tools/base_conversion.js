@@ -1,13 +1,16 @@
 class BaseConversion {
     constructor() {
         this.baseLimit = 512n;
+        this.lengthLimit = 4096n;
         let inputsBase = document.querySelectorAll("#base-conversion .base");
         let inputsNumber = document.querySelectorAll("#base-conversion .number");
         let inputsSequence = document.querySelectorAll("#base-conversion .sequence");
+        let buttonConvert = document.querySelector("#base-conversion .convert");
+        let buttonSwap = document.querySelector("#base-conversion .swap");
         let textError = document.querySelector("#base-conversion .error");
-        let execute = () => {
+        let execute = limited => {
             try {
-                inputsNumber[1].value = this.main(inputsNumber[0].value, BigInt(inputsBase[0].value), BigInt(inputsBase[1].value), inputsSequence[0].value, inputsSequence[1].value);
+                inputsNumber[1].value = this.main(inputsNumber[0].value, BigInt(inputsBase[0].value), BigInt(inputsBase[1].value), inputsSequence[0].value, inputsSequence[1].value, limited);
                 textError.innerText = "";
             }
             catch (error) {
@@ -19,7 +22,7 @@ class BaseConversion {
                 let value = BigInt(e.value.split("").filter(i => i >= "0" && i <= "9").join(""));
                 e.value = value;
                 if (value >= 2n && value <= this.baseLimit && inputsSequence[i].value.length != value) inputsSequence[i].value = this.getSequence(value);
-                execute();
+                execute(true);
             };
             e.onchange = () => {
                 let value = BigInt(e.value);
@@ -27,11 +30,12 @@ class BaseConversion {
                 if (value > this.baseLimit) value = this.baseLimit;
                 e.value = value;
                 if (inputsSequence[i].value.length != value) inputsSequence[i].value = this.getSequence(value);
-                execute();
+                execute(true);
             };
         }, this);
-        [inputsNumber[0], ...inputsSequence].forEach(e => e.oninput = execute);
-        document.querySelector(".swap").onclick = this.swap;
+        [inputsNumber[0], ...inputsSequence].forEach(e => e.oninput = () => execute(true));
+        buttonConvert.onclick = () => execute(false);
+        buttonSwap.onclick = this.swap;
     }
     getSequence(base) {
         const sequence = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+/" + new Array(448).fill(0).map((item, i) => String.fromCharCode(i + 192)).join("");
@@ -67,7 +71,7 @@ class BaseConversion {
         for (let i of n) result = result * base + i;
         return result;
     }
-    convert(n, base1, base2) {
+    convert(n, base1, base2, limited) {
         // convert n to m + p / q
         let m = this.parse(n.intPart, base1);
         let p = this.parse(n.fracPart, base1);
@@ -84,6 +88,11 @@ class BaseConversion {
             p /= d;
             q /= d;
         }
+        
+        // show fractional part
+        
+        let textFrac = document.querySelector("#base-conversion .frac");
+        textFrac.innerText = p === 0n ? "0" : `${p} / ${q}`;
         
         // convert to result
         let result = {intPart: [], fracPart: [], repetend: []};
@@ -104,10 +113,11 @@ class BaseConversion {
                 break;
             }
             remainders.push(p);
+            if (remainders.length > this.lengthLimit) throw "小数部分过长，请手动点击转换按钮";
         }
         return result;
     }
-    main(input, base1, base2, sequence1, sequence2) {
+    main(input, base1, base2, sequence1, sequence2, limited) {
         if (base1 < 2n || base1 > this.baseLimit) throw "无效的进制：" + base1;
         if (base2 < 2n || base2 > this.baseLimit) throw "无效的进制：" + base2;
         if (sequence1.length != base1 || new Set(sequence1).size != base1) throw "无效的序列：" + sequence1;
@@ -142,7 +152,7 @@ class BaseConversion {
             }
         }
         
-        let result = this.convert(n, base1, base2);
+        let result = this.convert(n, base1, base2, limited);
         let output = result.intPart.map(i => sequence2[i]).join("");
         if (result.fracPart.length > 0 || result.repetend.length > 0) output += "." + result.fracPart.map(i => sequence2[i]).join("");
         if (result.repetend.length > 0) output += `[${result.repetend.map(i => sequence2[i]).join("")}]`;
